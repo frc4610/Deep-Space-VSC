@@ -22,7 +22,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -34,6 +35,8 @@ import edu.wpi.first.wpilibj.SPI;
  * project.
  */
 public class Robot extends TimedRobot {
+	public static Counter limCounter;
+	public static DigitalInput testingLimit;
 	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
 	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
 	public static double encShopExtra = 400; //enc value the robot gains by slide. use accdecel v=motor values to nullify
@@ -62,6 +65,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		testingLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
+		limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
