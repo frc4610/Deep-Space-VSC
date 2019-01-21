@@ -9,7 +9,7 @@ package org.usfirst.frc.team4610.robot;
 
 
 
-import org.usfirst.frc.team4610.robot.commands.Invert;
+//import org.usfirst.frc.team4610.robot.commands.Invert;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -59,8 +59,8 @@ public class OI {
 		if(driver.equals("W"))
 		{
 		//button1.whenPressed(new LiftBottom()); example
-		 buttonR3.whenPressed(new Invert(0));//normal
-		 buttonR4.whenPressed(new Invert(1));//inverted
+		//buttonR3.whenPressed(new Invert(0));//normal
+		// buttonR4.whenPressed(new Invert(1));//inverted
 		}
 		else if (driver.equals("N"))
 		{
