@@ -14,28 +14,31 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveBase extends Subsystem {
 
-	private TalonSRX RightMotor;
-	private VictorSPX RightMotorFollow;
-	private TalonSRX LeftMotor;
-	private VictorSPX LeftMotorFollow;
+	private TalonSRX FRightMotor;//fr
+	private VictorSPX BRightMotorFollow;//br
+	private TalonSRX BLeftMotor;//bl
+	private VictorSPX FLeftMotorFollow;//fl
 
 	
 	public DriveBase() {
 		//sets up motors and encoders for talons
-		this.RightMotor = new TalonSRX(1); 
-		this.LeftMotor = new TalonSRX(3);
-		this.RightMotorFollow = new VictorSPX(2); 
-		this.LeftMotorFollow = new VictorSPX(4);
-		Robot.initTalonBrake(LeftMotor);
-		Robot.initTalonBrake(RightMotor);
-		Robot.initTalonBrake(LeftMotorFollow);
-		Robot.initTalonBrake(RightMotorFollow);
-		RightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		RightMotor.setSelectedSensorPosition(0, 0 ,10);
-		LeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-		LeftMotor.setSelectedSensorPosition(0, 0 ,10);
-		LeftMotorFollow.follow(LeftMotor);
-		RightMotorFollow.follow(RightMotor);
+		this.FRightMotor = new TalonSRX(1); 
+		this.BLeftMotor = new TalonSRX(3);
+		this.BRightMotorFollow = new VictorSPX(2); 
+		this.FLeftMotorFollow = new VictorSPX(4);
+		Robot.initTalonBrake(BLeftMotor);
+		Robot.initTalonBrake(FRightMotor);
+		Robot.initTalonBrake(FLeftMotorFollow);
+		Robot.initTalonBrake(BRightMotorFollow);
+		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
+		FRightMotor.setInverted(true);
+		//FRightMotor.configClosedloopRamp(1, 0);
+		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);//previously used CTRE_MagEncoder_Relative, should be QuadEncoder
+		BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
+		//BLeftMotor.configClosedloopRamp(1, 0);
+		FLeftMotorFollow.follow(BLeftMotor);
+		BRightMotorFollow.follow(FRightMotor);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -44,13 +47,13 @@ public class DriveBase extends Subsystem {
 		//sets motors based on inversion
 		if(Robot.front == 0)
 		{
-		LeftMotor.set(mode, leftvalue);
-		RightMotor.set(mode, rightvalue);
+		BLeftMotor.set(mode, leftvalue);
+		FRightMotor.set(mode, rightvalue);
 		}
 		else if(Robot.front == 1)
 		{
-		LeftMotor.set(mode, -rightvalue);
-		RightMotor.set(mode, -leftvalue);
+		BLeftMotor.set(mode, rightvalue);
+		FRightMotor.set(mode, leftvalue);
 		}
 
 	}
@@ -59,11 +62,11 @@ public class DriveBase extends Subsystem {
 	{
 		if(motor)
 		{
-			return RightMotor.getSelectedSensorPosition(0);
+			return -FRightMotor.getSelectedSensorPosition(0);
 		}
 		else
 		{
-			return LeftMotor.getSelectedSensorPosition(0);
+			return BLeftMotor.getSelectedSensorPosition(0);
 
 		}
 	}
@@ -72,16 +75,16 @@ public class DriveBase extends Subsystem {
 	{
 		if(motor == 0)
 		{
-			RightMotor.setSelectedSensorPosition(0, 0 ,10);
+			FRightMotor.setSelectedSensorPosition(0, 0 ,10);
 		}
 		else if(motor == 1)
 		{
-			LeftMotor.setSelectedSensorPosition(0, 0 ,10);
+			BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
 		}
 		else if(motor == 2)
 		{
-			RightMotor.setSelectedSensorPosition(0, 0 ,10);
-			LeftMotor.setSelectedSensorPosition(0, 0 ,10);
+			FRightMotor.setSelectedSensorPosition(0, 0 ,10);
+			BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
 		}
 	}
 	

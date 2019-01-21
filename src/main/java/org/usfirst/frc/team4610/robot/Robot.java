@@ -34,8 +34,9 @@ import edu.wpi.first.wpilibj.SPI;
  * project.
  */
 public class Robot extends TimedRobot {
-	//public static double encMultiFt; Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
-	//public static double encMultiIn; Enc value for inches. See above for how to use
+	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
+	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
+	public static double encShopExtra = 400; //enc value the robot gains by slide. use accdecel v=motor values to nullify
 	public static double autoTimer;//tracks time in ms
 	public static double autoTimeSec;//tracks time in seconds
 	public static double autoSpeed;//default speed for drivebase in auto
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		driveBase = new DriveBase();
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
@@ -74,7 +76,6 @@ public class Robot extends TimedRobot {
 		autoSpeed = .5;
 		front = 0;
 		interrupt = false;
-		driveBase = new DriveBase();
 		gyro = new AHRS(SPI.Port.kMXP);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
 		position.setDefaultOption("Middle", "m");
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
 		//.getSelected to get value for smart dash board values
 		m_oi = new OI(driver.getSelected(), operator.getSelected()); // Hector is a default, change for the assumed driver later
 		prefs = Preferences.getInstance();
+		driveBase.resetEnc(2);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -122,6 +124,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		driveBase.resetEnc(2);
 		//autonomousCommand = m_chooser.getSelected();
 		//new tankDrive();?
 		/*
@@ -157,6 +160,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		driveBase.resetEnc(2);
 		tele.start();//starts teleop, may be unessecary, test further
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

@@ -18,7 +18,7 @@ public class tankDrive extends Command {
 	public void execute() {
 		//double throttle = ( 1.0 -Robot.m_oi.LEFT_JOY.getThrottle()) / -2.0;
 		
-		Robot.driveBase.set(ControlMode.PercentOutput, -Robot.m_oi.LEFT_JOY.getRawAxis(1), -Robot.m_oi.RIGHT_JOY.getRawAxis(1));
+		Robot.driveBase.set(ControlMode.PercentOutput, -Robot.m_oi.LEFT_JOY.getRawAxis(1), -Robot.m_oi.RIGHT_JOY.getRawAxis(1));//remember joysticks automatically return inverted values
 	}
 	
 	
