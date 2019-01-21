@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj.SPI;
  * project.
  */
 public class Robot extends TimedRobot {
+	//Stage thingy
 	public static Counter limCounter;
 	public static DigitalInput testingLimit;
 	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
