@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.SPI;
  * project.
  */
 public class Robot extends TimedRobot {
-	//Stage thingy
+	//use https://stackoverflow.com/questions/46877667/how-to-push-a-new-initial-project-to-github-using-vs-code to connect to github
 	public static Counter limCounter;
 	public static DigitalInput testingLimit;
 	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
