@@ -52,9 +52,6 @@ public class Robot extends TimedRobot {
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
 	SendableChooser<String> operator;
-	/*Compressor c1=new Compressor();
-	DoubleSolenoid driverDs12=new DoubleSolenoid(1,2); Basic pneum code, make into subsystems
-	DoubleSolenoid intakeDs34=new DoubleSolenoid(3,4);*/
 	Command autonomousCommand;
 	Command tele;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
