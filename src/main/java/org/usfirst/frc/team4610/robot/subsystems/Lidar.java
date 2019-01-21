@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class Lidar extends Subsystem {
-  //note: code from https://github.com/WHS-FRC-3467/Skip-5.5/blob/master/src/org/usfirst/frc3467/subsystems/LIDAR/LIDAR.java and may be broken at parts. Test further
+  //note: code is from https://github.com/WHS-FRC-3467/Skip-5.5/blob/master/src/org/usfirst/frc3467/subsystems/LIDAR/LIDAR.java and may be broken at parts. Test further
   private I2C i2c;
 	private static byte[] distance;
   private java.util.Timer updater;
@@ -69,7 +69,7 @@ private class LIDARUpdater extends TimerTask
     while(true) 
     {
       update();
-      SmartDashboard.putNumber("LIDAR distance Inches", getDistanceIn());
+      SmartDashboard.putNumber("LIDAR distance Inches", getDistanceIn());// this and the try section may be deleted if proven unneeded
       try 
       {
         Thread.sleep(10);
