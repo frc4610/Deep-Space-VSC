@@ -23,19 +23,21 @@ public class Invert extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.front = set;
+        //Robot.front = set;
+        Robot.interrupt = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(this.set ==0)
+    	/*if(this.set ==0)
     	{
     		return !Robot.m_oi.buttonR3.get();
     	}
     	else
     	{
     		return !Robot.m_oi.buttonR4.get();
-    	}
+        }*/
+        return true;
     }
 
     // Called once after isFinished returns true

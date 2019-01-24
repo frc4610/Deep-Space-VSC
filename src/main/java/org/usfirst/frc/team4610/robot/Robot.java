@@ -153,6 +153,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		if(interrupt)
+		{
+			tele.start();
+		}
 		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms
 		autoTimeSec = autoTimer / 1000;
 		checkTeleop();//checks for override
@@ -206,7 +210,7 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
-		motor.configClosedloopRamp(0.55, 0);
+		motor.configClosedloopRamp(0.75, 0);
 	}
 	public static void initTalonCoast(VictorSPX motor) {
 		motor.setNeutralMode(NeutralMode.Coast);
@@ -223,13 +227,13 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
-		motor.configClosedloopRamp(0.55, 0);
+		motor.configClosedloopRamp(0.75, 0);
 	}
 	public static void checkTeleop()
 	{
 		//if anything is pressed, stop auto
-		if(m_oi.buttonR3.get() || m_oi.buttonR4.get() || m_oi.LEFT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0 || 
-		   m_oi.LEFT_JOY.getRawAxis(1) + acceptedJoyTolerance <= 0  ||  m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0 ||  
+		if(m_oi.buttonR3.get() || m_oi.buttonR4.get() || m_oi.LEFT_JOY.getRawAxis(1) >= 0 + acceptedJoyTolerance|| 
+		   m_oi.LEFT_JOY.getRawAxis(1)  <= 0-acceptedJoyTolerance ||  m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0 ||  
 		   m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0)
 		{
 			interrupt = true;

@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+//import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -18,6 +19,8 @@ public class DriveBase extends Subsystem {
 	private VictorSPX BRightMotorFollow;//br
 	private TalonSRX BLeftMotor;//bl
 	private VictorSPX FLeftMotorFollow;//fl
+	//private double leftSd;
+	//private double rightSd;
 
 	
 	public DriveBase() {
@@ -26,6 +29,8 @@ public class DriveBase extends Subsystem {
 		this.BLeftMotor = new TalonSRX(3);
 		this.BRightMotorFollow = new VictorSPX(2); 
 		this.FLeftMotorFollow = new VictorSPX(4);
+		//this.leftSd = 0;
+		//this.rightSd =0;
 		Robot.initTalonBrake(BLeftMotor);
 		Robot.initTalonBrake(FRightMotor);
 		Robot.initTalonBrake(FLeftMotorFollow);
@@ -33,8 +38,9 @@ public class DriveBase extends Subsystem {
 		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.setInverted(true);
+		BRightMotorFollow.setInverted(true);
 		//FRightMotor.configClosedloopRamp(1, 0);
-		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);//previously used CTRE_MagEncoder_Relative, should be QuadEncoder
+		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
 		//BLeftMotor.configClosedloopRamp(1, 0);
 		FLeftMotorFollow.follow(BLeftMotor);
@@ -57,12 +63,31 @@ public class DriveBase extends Subsystem {
 		}
 
 	}
-	
+	/*public void ramp(double targetLeft, double targetRight)
+	{
+		if((targetLeft > 0)&&(leftSd + 30 <= targetLeft))
+		{
+			leftSd+=30;
+		}
+		else if(targetLeft < 0)
+		{
+
+		}
+		if(targetRight > 0)
+		{
+
+		}
+		else if(targetRight < 0)
+		{
+			
+		}
+		Timer.delay(1);
+	}*/
 	public double getEncValue(boolean motor)//if motor is true, find right motor, false gets left. Returns encoder value
 	{
 		if(motor)
 		{
-			return -FRightMotor.getSelectedSensorPosition(0);
+			return FRightMotor.getSelectedSensorPosition(0);
 		}
 		else
 		{

@@ -13,7 +13,7 @@ public class sandAutoBasic extends CommandGroup {
     public sandAutoBasic() {
     	//requires(Robot.Mechanism);
     	addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
-    	addSequential(new forward(1337/*number of move*/, 2*Robot.encMultiFt/*speed left then right*/, 2*Robot.encMultiFt));
+    	addSequential(new forward(Robot.encMultiFt/*number of move*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
     	//addSequential(new place(/*hatch*/));
         // Add Commands here:
         // e.g. addSequential(new Command1());
