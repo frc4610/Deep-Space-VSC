@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4610.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+//import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
+//import org.usfirst.frc.team4610.robot.subsystems.Lidar;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -23,6 +25,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI;
@@ -49,10 +52,12 @@ public class Robot extends TimedRobot {
 	public static double acceptedTurnTolerance = 5;//obvious, for auto
 	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto
 	public static DriveBase driveBase;
+	//public static Lidar lidar;
 	public static AHRS gyro;
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
+	public Servo testServo = new Servo(1);
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
 	SendableChooser<String> operator;
@@ -66,6 +71,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
+		//testServo.setSpeed(1);//forward, check both functions
+		//testServo.setSpeed(0);//reverse, check both functions
+		//testServo.getPosition();//input for the acutator?
+		//lidar = new Lidar(Port.kMXP);
 		testingLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
 		limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
@@ -91,7 +101,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Driver", driver);
 		SmartDashboard.putData("Operator", operator);
 		//.getSelected to get value for smart dash board values
-		m_oi = new OI(driver.getSelected(), operator.getSelected()); // Hector is a default, change for the assumed driver later
+		m_oi = new OI(driver.getSelected(), operator.getSelected()); 
 		prefs = Preferences.getInstance();
 		driveBase.resetEnc(2);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
@@ -167,6 +177,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		//lidar.start();
 		driveBase.resetEnc(2);
 		tele.start();//starts teleop, may be unessecary, test further
 		// This makes sure that the autonomous stops running when
