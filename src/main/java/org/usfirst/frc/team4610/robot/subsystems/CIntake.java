@@ -21,11 +21,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CIntake extends Subsystem {
   private VictorSPX intakeV;
   private DigitalInput intakeLimit;
-  private DoubleSolenoid intakeDS78;
+  private DoubleSolenoid intakeDS12;
 
   public CIntake(int first, int second, int limitPort)
   {
-    this.intakeDS78 = new DoubleSolenoid(first, second);
+    this.intakeDS12 = new DoubleSolenoid(1, first, second);
     this.intakeV = new VictorSPX(5);//5 is the motor address
     this.intakeLimit = new DigitalInput(limitPort);
     Robot.initTalonBrake(intakeV);
@@ -37,11 +37,11 @@ public class CIntake extends Subsystem {
   }
   public void cInAdjustF()
   {
-    intakeDS78.set(DoubleSolenoid.Value.kForward);
+    intakeDS12.set(DoubleSolenoid.Value.kForward);
   }
   public void cInAdjustR()
   {
-    intakeDS78.set(DoubleSolenoid.Value.kReverse);
+    intakeDS12.set(DoubleSolenoid.Value.kReverse);
   }
   public boolean isCargoIn()
   {

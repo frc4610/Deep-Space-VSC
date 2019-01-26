@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4610.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -23,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class FourBar extends Subsystem {
   private VictorSPX fbV;
   private TalonSRX fbT;
-  private DoubleSolenoid fbDS90;
+  private DoubleSolenoid fbDS34;
   private DigitalInput fbLimitTop;
   private DigitalInput fbLimitBot;
 
@@ -33,8 +34,10 @@ public class FourBar extends Subsystem {
     this.fbV = new VictorSPX(7);
     Robot.initTalonBrake(fbT);
     Robot.initTalonBrake(fbV);
+    fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
+    fbT.setSelectedSensorPosition(0, 0 ,10);
     //fbV.follow(fbT);
-    this.fbDS90 = new DoubleSolenoid(first, second);
+    this.fbDS34 = new DoubleSolenoid(1, first, second);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);
   }
@@ -46,11 +49,11 @@ public class FourBar extends Subsystem {
   }
   public void barHighG()
   {
-    fbDS90.set(DoubleSolenoid.Value.kForward);
+    fbDS34.set(DoubleSolenoid.Value.kForward);
   }
   public void barLowG()
   {
-    fbDS90.set(DoubleSolenoid.Value.kReverse);
+    fbDS34.set(DoubleSolenoid.Value.kReverse);
   }
   public boolean barTop()
   {
@@ -59,6 +62,10 @@ public class FourBar extends Subsystem {
   public boolean barBot()
   {
     return !fbLimitBot.get();
+  }
+  public void resetBEnc()
+  {
+    fbT.setSelectedSensorPosition(0, 0 ,10);
   }
 
   // Put methods for controlling this subsystem

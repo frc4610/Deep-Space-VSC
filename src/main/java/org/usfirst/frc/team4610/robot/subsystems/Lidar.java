@@ -33,14 +33,14 @@ public class Lidar extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   
-  private static final int CALIBRATION_OFFSET = -6;
+  private static final int CALIBRATION_OFFSET = -9;//originally -6
   private Counter counter;
   //private int printedWarningCount = 5;
   
   public Lidar(/*Port port*/DigitalInput source) {
     
     counter = new Counter(source);
-    counter.setMaxPeriod(1.0);
+    counter.setMaxPeriod(.5);
     // Configure for measuring rising to falling pulses
     counter.setSemiPeriodMode(true);
     counter.reset();

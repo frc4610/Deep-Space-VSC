@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 		//testServo.setSpeed(1);//forward, check both functions
 		//testServo.setSpeed(0);//reverse, check both functions
 		//testServo.getPosition();//input for the acutator?
-		lidar = new Lidar(new DigitalInput(8));// the number is for the port
+		lidar = new Lidar(new DigitalInput(0));// the number is for the port
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
 		pneum= new Pneum(1,2);
@@ -94,8 +94,8 @@ public class Robot extends TimedRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
-		intake = new CIntake(7,8,2);
-		bar = new FourBar(9, 10, 3, 4);
+		intake = new CIntake(1,2,2);
+		bar = new FourBar(3, 4, 3, 4);
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -121,6 +121,7 @@ public class Robot extends TimedRobot {
 		tail.tailUp();
 		bar.barHighG();
 		intake.cInAdjustF();
+		bar.resetBEnc();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);

@@ -20,8 +20,8 @@ public class Tail extends Subsystem {
   private DigitalInput tailLimit;
   public Tail(int firstT, int secondT, int firstE, int secondE,int limitPort)
   {
-    this.tailDS34 = new DoubleSolenoid(firstT, secondT);
-    this.ejectDS56 = new DoubleSolenoid(firstE, secondE);
+    this.tailDS34 = new DoubleSolenoid(0, firstT, secondT);
+    this.ejectDS56 = new DoubleSolenoid(0, firstE, secondE);
     this.tailLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
   }
 
