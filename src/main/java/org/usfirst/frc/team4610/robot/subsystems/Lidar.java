@@ -8,52 +8,27 @@
 package org.usfirst.frc.team4610.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-/*import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.Timer;
-import java.util.TimerTask;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;*/
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
-//import edu.wpi.first.wpilibj.DigitalSource;
 /**
  * Add your docs here.
  */
 public class Lidar extends Subsystem {
-  //note: code is from https://github.com/WHS-FRC-3467/Skip-5.5/blob/master/src/org/usfirst/frc3467/subsystems/LIDAR/LIDAR.java and may be broken at parts. Test further
-  //Commented code is from https://github.com/Barlow-Robotics/BarlowRobotics-2018-Code/blob/master/src/org/usfirst/frc/team4572/robot/subsystems/LIDARSubsystem.java and is for pwm
-  /*private I2C i2c;
-	private static byte[] distance;
-  private java.util.Timer updater;
-  private LIDARUpdater task;	
-  
-	private final int LIDAR_ADDR = 0x62;
-	private final int LIDAR_CONFIG_REGISTER = 0x00;
-  private final int LIDAR_DISTANCE_REGISTER = 0x8f;*/
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  //note: old code is from https://github.com/WHS-FRC-3467/Skip-5.5/blob/master/src/org/usfirst/frc3467/subsystems/LIDAR/LIDAR.java and has since been deleted, but this link has been kept
+  //code is from https://github.com/Barlow-Robotics/BarlowRobotics-2018-Code/blob/master/src/org/usfirst/frc/team4572/robot/subsystems/LIDARSubsystem.java and is somewhat good
   
   private static final int CALIBRATION_OFFSET = -9;//originally -6
   private Counter counter;
-  //private int printedWarningCount = 5;
+  //private int printedWarningCount = 5;//commented out because I'm lazy
   
-  public Lidar(/*Port port*/DigitalInput source) {
-    
+  public Lidar(DigitalInput source) {
+    //source is the port  of DigitalInput the LIDAR is plugged into
     counter = new Counter(source);
     counter.setMaxPeriod(.5);
-    // Configure for measuring rising to falling pulses
+    // Configure for measuring rising to falling pulses, read screensteps for more in depth info
     counter.setSemiPeriodMode(true);
     counter.reset();
-    
 
-  //top is pwm, bottom is i2c
-
-		/*i2c = new I2C(Port.kMXP, LIDAR_ADDR);
-		
-    distance = new byte[2];
-    
-    task = new LIDARUpdater();
-		updater = new java.util.Timer();*/
 }
 
 public double getDistanceCm(boolean rounded) {
@@ -82,52 +57,6 @@ public double getDistanceCm(boolean rounded) {
     	}
 }
 
-
-//top is pwm, bottom is i2c
-
-/*
-public static int getDistance() {
-  return (int)Integer.toUnsignedLong(distance[0] << 8) + Byte.toUnsignedInt(distance[1]);//returns in cm
-}
-
-public static double getDistanceIn()
-{
-  return getDistance() / 2.54;
-}
-
-public void start() {
-  updater.scheduleAtFixedRate(task, 0, 20);
-}
-
-public void update() {
-  i2c.write(LIDAR_CONFIG_REGISTER, 0x04); // Initiate measurement
-  Timer.delay(0.04); // Delay for measurement to be taken
-  i2c.read(LIDAR_DISTANCE_REGISTER, 2, distance); // Read in measurement
-  Timer.delay(0.01); // Delay to prevent over polling
-}
-
-public void stop() {
-  updater.cancel();
-}
-
-private class LIDARUpdater extends TimerTask 
-{
-  public void run() 
-  {
-    while(true) 
-    {
-      update();
-      SmartDashboard.putNumber("LIDAR distance Inches", getDistanceIn());// this and the try section may be deleted if proven unneeded
-      try 
-      {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-}
-*/
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

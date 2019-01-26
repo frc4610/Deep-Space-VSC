@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
-	public Servo testServo = new Servo(1);
+	public Servo testServo = new Servo(1);//still untested, linear actuator testing
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
 	SendableChooser<String> operator;
@@ -88,14 +88,14 @@ public class Robot extends TimedRobot {
 		lidar = new Lidar(new DigitalInput(0));// the number is for the port
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
-		pneum= new Pneum(1,2);
+		pneum= new Pneum(1,2);//see subsystem for the parameters
 		tail = new Tail(3,4,5,6,1);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
-		intake = new CIntake(1,2,2);
-		bar = new FourBar(3, 4, 3, 4);
+		intake = new CIntake(1,2,2);//see subsystem for the parameters
+		bar = new FourBar(3, 4, 3, 4);//see subsystem for the parameters
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -116,6 +116,7 @@ public class Robot extends TimedRobot {
 		//.getSelected to get value for smart dash board values
 		m_oi = new OI(driver.getSelected(), operator.getSelected()); 
 		prefs = Preferences.getInstance();
+		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
 		tail.resetEject();
 		tail.tailUp();
@@ -188,7 +189,7 @@ public class Robot extends TimedRobot {
 		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms
 		autoTimeSec = autoTimer / 1000;
 		checkTeleop();//checks for override
-		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, send enc values
+		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		Scheduler.getInstance().run();
 	}
@@ -213,7 +214,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
-		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));
+		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		Scheduler.getInstance().run();
 	}

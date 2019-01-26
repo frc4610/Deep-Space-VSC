@@ -16,6 +16,7 @@ public class BarMoving extends Command {
 private double speed;
 
   public BarMoving(double Speed) {
+    //moves bar based on inputted speed
     this.speed = Speed;
     requires(Robot.bar);
     // Use requires() here to declare subsystem dependencies
@@ -37,6 +38,7 @@ private double speed;
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //stops when button is released. change later to set to the limit switches or enc values.
     if(speed < 0)
     {
       return !Robot.m_oi.buttonL1.get();

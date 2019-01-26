@@ -30,6 +30,7 @@ public class FourBar extends Subsystem {
 
   public FourBar(int first, int second, int topPort, int botPort)
   {
+    //first is the 1st port the ds is plugged into, second is the second. topPort is the port for the limit switch on top, and botPort is the bottom limit switch. Pretty self-explanitory
     this.fbT = new TalonSRX(6);
     this.fbV = new VictorSPX(7);
     Robot.initTalonBrake(fbT);

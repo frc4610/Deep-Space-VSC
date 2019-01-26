@@ -20,6 +20,7 @@ public class Tail extends Subsystem {
   private DigitalInput tailLimit;
   public Tail(int firstT, int secondT, int firstE, int secondE,int limitPort)
   {
+    //first is the 1st port the ds is plugged into, second is the second. The E and T for these are for the eject and tail mechanisms respectively. limitPort is the port for the limit switch. Pretty self-explanitory
     this.tailDS34 = new DoubleSolenoid(0, firstT, secondT);
     this.ejectDS56 = new DoubleSolenoid(0, firstE, secondE);
     this.tailLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed

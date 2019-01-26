@@ -16,6 +16,7 @@ public class Intake extends Command {
   private String object;
 
   public Intake(String Object) {
+    //Intakes a hatch or Cargo
     this.object = Object;
     requires(Robot.intake);
     requires(Robot.tail);
