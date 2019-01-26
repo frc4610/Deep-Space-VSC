@@ -16,9 +16,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
+import org.usfirst.frc.team4610.robot.subsystems.CIntake;
 import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4610.robot.subsystems.FourBar;
 import org.usfirst.frc.team4610.robot.subsystems.Lidar;
+import org.usfirst.frc.team4610.robot.subsystems.Pneum;
+import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -42,7 +46,7 @@ import edu.wpi.first.wpilibj.SPI;
 public class Robot extends TimedRobot {
 	//use https://stackoverflow.com/questions/46877667/how-to-push-a-new-initial-project-to-github-using-vs-code to connect to github
 	public static Counter limCounter;
-	public static DigitalInput testingLimit;
+	//public static DigitalInput testingLimit;
 	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
 	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
 	public static double encShopExtra = 400; //enc value the robot gains by slide. use acc/decel motor values to nullify
@@ -56,6 +60,10 @@ public class Robot extends TimedRobot {
 	public static DriveBase driveBase;
 	public static Lidar lidar;
 	public static AHRS gyro;
+	public static Tail tail;
+	public static FourBar bar;
+	public static CIntake intake;
+	public static Pneum pneum;
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
@@ -73,19 +81,21 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//For the intake mechanisms, it will either be 1 motor to intake/output, or 1/2 doublesolenoids to control hatchpanels
 		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
 		//testServo.setSpeed(1);//forward, check both functions
 		//testServo.setSpeed(0);//reverse, check both functions
 		//testServo.getPosition();//input for the acutator?
-		lidar = new Lidar(new DigitalInput(1));// the number is for the port
-		testingLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
-		limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
+		lidar = new Lidar(new DigitalInput(8));// the number is for the port
+		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
+		pneum= new Pneum(1,2);
+		tail = new Tail(3,4,5,6,1);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
+		intake = new CIntake(7,8,2);
+		bar = new FourBar(9, 10, 3, 4);
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -107,6 +117,10 @@ public class Robot extends TimedRobot {
 		m_oi = new OI(driver.getSelected(), operator.getSelected()); 
 		prefs = Preferences.getInstance();
 		driveBase.resetEnc(2);
+		tail.resetEject();
+		tail.tailUp();
+		bar.barHighG();
+		intake.cInAdjustF();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);

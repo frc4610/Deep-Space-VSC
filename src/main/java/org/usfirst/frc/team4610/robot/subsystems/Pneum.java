@@ -13,7 +13,7 @@ public class Pneum extends Subsystem {
 	private Compressor compressor;
 	private DoubleSolenoid driveDs12;
 	
-	public Pneum() {
+	public Pneum(int first, int second) {
 		//sets up pnuematics
 		this.compressor = new Compressor();
 		this.driveDs12 = new DoubleSolenoid(1,2);
@@ -21,7 +21,7 @@ public class Pneum extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	public void forward()
+	public void forward()//change to high/low gear, also make it a command
 	{
 		driveDs12.set(DoubleSolenoid.Value.kForward);
 	}
@@ -29,7 +29,6 @@ public class Pneum extends Subsystem {
 	{
 		driveDs12.set(DoubleSolenoid.Value.kReverse);
 	}
-	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

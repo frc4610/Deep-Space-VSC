@@ -9,6 +9,10 @@ package org.usfirst.frc.team4610.robot;
 
 
 
+import org.usfirst.frc.team4610.robot.commands.BarMoving;
+import org.usfirst.frc.team4610.robot.commands.Intake;
+import org.usfirst.frc.team4610.robot.commands.place;
+
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -24,8 +28,12 @@ public class OI {
 	public  Joystick LEFT_JOY = new Joystick(0);
 	public  Joystick RIGHT_JOY = new Joystick(1);
 	public  Joystick BACKUP_JOY = new Joystick(2);
+	public Button buttonR1 = new JoystickButton(RIGHT_JOY, 1);
 	public Button buttonR3 = new JoystickButton(RIGHT_JOY, 3);
 	public Button buttonR4 = new JoystickButton(RIGHT_JOY, 4);
+	public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
+	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
+	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
 	//public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -58,9 +66,14 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-		//button1.whenPressed(new LiftBottom()); example
-		//buttonR3.whenPressed(new Invert(0));//normal
-		// buttonR4.whenPressed(new Invert(1));//inverted
+			buttonL1.whenPressed(new BarMoving(-.5));
+			buttonL3.whenPressed(new Intake("Hatch")); 
+			buttonL4.whenPressed(new Intake("Cargo"));
+			buttonR1.whenPressed(new BarMoving(.5)); 
+			buttonR3.whenPressed(new place("Hatch", false)); 
+			buttonR4.whenPressed(new place("Cargo", false)); 
+			//buttonR3.whenPressed(new Invert(0));//normal
+			// buttonR4.whenPressed(new Invert(1));//inverted
 		}
 		else if (driver.equals("N"))
 		{
