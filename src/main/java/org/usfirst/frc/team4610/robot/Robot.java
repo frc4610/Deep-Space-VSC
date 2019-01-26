@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
-//import org.usfirst.frc.team4610.robot.subsystems.Lidar;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team4610.robot.subsystems.Lidar;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -52,7 +54,7 @@ public class Robot extends TimedRobot {
 	public static double acceptedTurnTolerance = 5;//obvious, for auto
 	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto
 	public static DriveBase driveBase;
-	//public static Lidar lidar;
+	public static Lidar lidar;
 	public static AHRS gyro;
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
@@ -71,11 +73,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//For the intake mechanisms, it will either be 1 motor to intake/output, or 1/2 doublesolenoids to control hatchpanels
 		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
 		//testServo.setSpeed(1);//forward, check both functions
 		//testServo.setSpeed(0);//reverse, check both functions
 		//testServo.getPosition();//input for the acutator?
-		//lidar = new Lidar(Port.kMXP);
+		lidar = new Lidar(new DigitalInput(1));// the number is for the port
 		testingLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
 		limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
@@ -194,6 +197,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		Scheduler.getInstance().run();
@@ -221,7 +225,7 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
-		motor.configClosedloopRamp(0.75, 0);
+		motor.configClosedloopRamp(0.75, 0);//used to be 55, test further is this value is fine
 	}
 	public static void initTalonCoast(VictorSPX motor) {
 		motor.setNeutralMode(NeutralMode.Coast);
@@ -242,7 +246,7 @@ public class Robot extends TimedRobot {
 	}
 	public static void checkTeleop()
 	{
-		//if anything is pressed, stop auto
+		//if anything is pressed, stop auto. Seems to be broken. oops
 		if(m_oi.buttonR3.get() || m_oi.buttonR4.get() || m_oi.LEFT_JOY.getRawAxis(1) >= 0 + acceptedJoyTolerance|| 
 		   m_oi.LEFT_JOY.getRawAxis(1)  <= 0-acceptedJoyTolerance ||  m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0 ||  
 		   m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0)
