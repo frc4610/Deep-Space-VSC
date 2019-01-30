@@ -37,6 +37,7 @@ public class FourBar extends Subsystem {
     Robot.initTalonBrake(fbV);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
+    fbV.setInverted(true);
     //fbV.follow(fbT);
     this.fbDS34 = new DoubleSolenoid(1, first, second);
     this.fbLimitTop = new DigitalInput(topPort);
@@ -45,7 +46,7 @@ public class FourBar extends Subsystem {
   
   public void setBar(double speed)
   {
-    fbV.set(ControlMode.PercentOutput, -speed);//is inverted, test to check if
+    fbV.set(ControlMode.PercentOutput, speed);//is inverted, test to check if works
     fbT.set(ControlMode.PercentOutput, speed);
   }
   public void barHighG()

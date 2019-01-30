@@ -45,6 +45,10 @@ import edu.wpi.first.wpilibj.SPI;
  */
 public class Robot extends TimedRobot {
 	//use https://stackoverflow.com/questions/46877667/how-to-push-a-new-initial-project-to-github-using-vs-code to connect to github
+
+	// links to help with pid controll, test extensivly
+	//https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599736-pidsubsystems-for-built-in-pid-control
+	//https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html
 	public static Counter limCounter;
 	//public static DigitalInput testingLimit;
 	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
@@ -67,7 +71,7 @@ public class Robot extends TimedRobot {
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
-	public Servo testServo = new Servo(1);//still untested, linear actuator testing
+	public Servo testServo = new Servo(1);//still untested, linear actuator testing. May beunused in the real bot
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
 	SendableChooser<String> operator;
