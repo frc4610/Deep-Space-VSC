@@ -46,7 +46,7 @@ import edu.wpi.first.wpilibj.SPI;
 public class Robot extends TimedRobot {
 	//use https://stackoverflow.com/questions/46877667/how-to-push-a-new-initial-project-to-github-using-vs-code to connect to github
 
-	// links to help with pid controll, test extensivly
+	// links to help with pid control, test extensivly
 	//https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599736-pidsubsystems-for-built-in-pid-control
 	//https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html
 	public static Counter limCounter;
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 	public static Lidar lidar;
 	public static AHRS gyro;
 	public static Tail tail;
-	public static FourBar bar;
+	public static FourBar bar;//Later, test with pidtesting after this subsystem works
 	public static CIntake intake;
 	public static Pneum pneum;
 	public static Preferences prefs;
