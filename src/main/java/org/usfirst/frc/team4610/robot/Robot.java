@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
+import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.CIntake;
 import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
 	SendableChooser<String> operator;
+	SendableChooser<String> goal;
 	Command autonomousCommand;
 	Command tele;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -103,6 +105,7 @@ public class Robot extends TimedRobot {
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
+		goal = new SendableChooser<>();
 		autoSpeed = .5;
 		front = 0;
 		interrupt = false;
@@ -112,8 +115,12 @@ public class Robot extends TimedRobot {
 		position.addOption("Right2", "R");
 		position.addOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
-		driver.setDefaultOption("Winte", "W");
-		operator.setDefaultOption("Nathan", "N");
+		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.addOption("Direct Hatch", "h");
+		//goal.addOption("Hatch and Regrab", "r"); see below
+		//goal.addOption("Double Hatch", "d"); commented until further testing, don't want to rush too far ahead
+		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
+		operator.setDefaultOption("Nathan", "N");//same as above
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Driver", driver);
 		SmartDashboard.putData("Operator", operator);
@@ -169,11 +176,24 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-		//
-		if (position.getSelected().equals("L")||position.getSelected().equals("R"))
+		//position lower case is HAB 1, upper is HAB 2. l, r and m
+		//goal is f is forward, h is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		if (position.getSelected().equals("m")||goal.getSelected().equals("f"))
 		{
 			autonomousCommand = new sandAutoBasic();
 		}
+		else if (goal.getSelected().equals("h"))
+		{
+			autonomousCommand = new sandAutoPlace();//use params to better use left/right/hab lvl for command groups called. Auto functions still untested
+		}
+		/*else if (goal.getSelected().equals("r"))
+		{
+			autonomousCommand = new sandAutoBasic();
+		}
+		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian unmae until 
+		{
+			autonomousCommand = new sandAutoBasic();
+		}*/
 		// schedule the autonomous command (example)
 		 //Basic setter, try to use as reference
 		if (autonomousCommand != null) {

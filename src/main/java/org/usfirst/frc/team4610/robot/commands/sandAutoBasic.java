@@ -11,9 +11,9 @@ import org.usfirst.frc.team4610.robot.commands.Delay;
 public class sandAutoBasic extends CommandGroup {
 
     public sandAutoBasic() {
-    	//requires(Robot.Mechanism);
+    	requires(Robot.driveBase);
     	addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
-    	addSequential(new forward(Robot.encMultiFt/*number of move*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+    	addSequential(new forward(Robot.encMultiFt/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
     	//addSequential(new place(/*hatch*/));
         // Add Commands here:
         // e.g. addSequential(new Command1());
