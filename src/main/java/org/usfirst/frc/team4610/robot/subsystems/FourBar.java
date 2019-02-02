@@ -15,7 +15,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -24,11 +23,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class FourBar extends Subsystem {
   private VictorSPX fbV;
   private TalonSRX fbT;
-  private DoubleSolenoid fbDS34;
   private DigitalInput fbLimitTop;
   private DigitalInput fbLimitBot;
 
-  public FourBar(int first, int second, int topPort, int botPort)
+  public FourBar(int topPort, int botPort)
   {
     //first is the 1st port the ds is plugged into, second is the second. topPort is the port for the limit switch on top, and botPort is the bottom limit switch. Pretty self-explanitory
     this.fbT = new TalonSRX(6);
@@ -39,7 +37,6 @@ public class FourBar extends Subsystem {
     fbT.setSelectedSensorPosition(0, 0 ,10);
     fbV.setInverted(true);
     //fbV.follow(fbT);
-    this.fbDS34 = new DoubleSolenoid(1, first, second);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);
   }
@@ -48,14 +45,6 @@ public class FourBar extends Subsystem {
   {
     fbV.set(ControlMode.PercentOutput, speed);//is inverted, test to check if works
     fbT.set(ControlMode.PercentOutput, speed);
-  }
-  public void barHighG()
-  {
-    fbDS34.set(DoubleSolenoid.Value.kForward);
-  }
-  public void barLowG()
-  {
-    fbDS34.set(DoubleSolenoid.Value.kReverse);
   }
   public boolean barTop()
   {
@@ -68,6 +57,10 @@ public class FourBar extends Subsystem {
   public void resetBEnc()
   {
     fbT.setSelectedSensorPosition(0, 0 ,10);
+  }
+  public double getEncValue()
+  {
+    return fbT.getSelectedSensorPosition();
   }
 
   // Put methods for controlling this subsystem

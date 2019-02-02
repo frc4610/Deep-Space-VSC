@@ -26,7 +26,7 @@ public class CIntake extends Subsystem {
   public CIntake(int first, int second, int limitPort)
   {
     //first is the 1st port the ds is plugged into, second is the second. limitPort is the port for the limit switch. Pretty self-explanitory
-    this.intakeDS12 = new DoubleSolenoid(1, first, second);
+    this.intakeDS12 = new DoubleSolenoid(0, first, second);
     this.intakeV = new VictorSPX(5);//5 is the motor address
     this.intakeLimit = new DigitalInput(limitPort);
     Robot.initTalonBrake(intakeV);

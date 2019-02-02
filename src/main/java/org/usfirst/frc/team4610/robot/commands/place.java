@@ -12,14 +12,17 @@ public class place extends Command {
 
 private String object;
 private boolean auto;
+private Timer timer;
 
     public place(String Object, boolean Auto) {
         //places a hatch or cargo
         this.object = Object;
         this.auto = Auto;
+        this.timer = new Timer();
         requires(Robot.intake);
         requires(Robot.tail);
-    	//this.Object = object;
+
+    	//This always requires both systems, since if both were to be controlled we'd have to be manipulting two game pieces. May want to change later
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -38,7 +41,7 @@ private boolean auto;
         {
             Robot.tail.eject();
         }
-        Timer.delay(.5);
+        
     	//check to see if safe, stop drive base
     }
 
@@ -49,7 +52,7 @@ private boolean auto;
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;//sensor place/ mechanism moved || Robot.interrupted;
+        return timer.get() >= .5;//sensor place/ mechanism moved || Robot.interrupted;
     }
 
     // Called once after isFinished returns true
@@ -62,6 +65,7 @@ private boolean auto;
         {
             Robot.tail.resetEject();
         }
+        timer.stop();
     	//stop all moving parts save for drive base
     }
 
@@ -76,5 +80,6 @@ private boolean auto;
         {
             Robot.tail.resetEject();
         }
+        timer.stop();
     }
 }

@@ -6,20 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team4610.robot.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.team4610.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 
-public class Intake extends Command {
-
-  private String object;
-
-  public Intake(String Object) {
-    //Intakes a hatch or Cargo
-    this.object = Object;
-    requires(Robot.intake);
-    requires(Robot.tail);
+public class CrossRelease extends Command {
+  private Timer timer;
+  public CrossRelease() {
+    requires(Robot.cbow);
+    requires(Robot.cbow);
+    this.timer = new Timer();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -27,15 +24,8 @@ public class Intake extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.interrupt = true;
-    if(object.equals("Cargo"))
-        {
-            Robot.intake.setIntake(.5);
-        }
-        else if(object.equals("Hatch"))
-        {
-            Robot.tail.tailMove(.5);
-        }
+    Robot.cbow.release();
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,45 +36,20 @@ public class Intake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(object.equals("Hatch"))
-    {
-      return !Robot.m_oi.buttonL3.get();
-    }
-    else if(object.equals("Cargo"))
-    {
-      return !Robot.m_oi.buttonR3.get();//||Robot.intake.isCargoIn();
-    }
-    else
-    {
-      return true;
-    }
-    
+    return timer.get() >= .2;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    if(object.equals("Cargo"))
-        {
-            Robot.intake.setIntake(0);
-        }
-        else if(object.equals("Hatch"))
-        {
-            Robot.tail.tailMove(0);//add new command to re put tail up
-        }
+    timer.stop();
+    Robot.cbow.crossIn();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    if(object.equals("Cargo"))
-        {
-            Robot.intake.setIntake(0);
-        }
-        else if(object.equals("Hatch"))
-        {
-          Robot.tail.tailMove(0);
-        }
+    timer.stop();
   }
 }

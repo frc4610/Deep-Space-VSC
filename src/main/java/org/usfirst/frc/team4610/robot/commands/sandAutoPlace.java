@@ -21,6 +21,10 @@ public class sandAutoPlace extends CommandGroup {
     addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
     addSequential(new forward(Robot.encMultiFt/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
     addSequential(new place("Hatch", true));//params in command
+
+    //for future commands, most likely add turns to get to a good angle, drive forward and grab. turn again to re-aim and place again for "d".
+    //I have yet to do this as so many placeholders will be there. Test using my list before this gets furthered
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

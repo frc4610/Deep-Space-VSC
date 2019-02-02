@@ -11,7 +11,11 @@ package org.usfirst.frc.team4610.robot;
 
 import org.usfirst.frc.team4610.robot.commands.BarMoving;
 import org.usfirst.frc.team4610.robot.commands.Intake;
+import org.usfirst.frc.team4610.robot.commands.IntakeTailUp;
 import org.usfirst.frc.team4610.robot.commands.place;
+import org.usfirst.frc.team4610.robot.commands.CrossIntake;
+import org.usfirst.frc.team4610.robot.commands.CrossRelease;
+import org.usfirst.frc.team4610.robot.commands.CIntPneums;
 
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
@@ -31,6 +35,10 @@ public class OI {
 	public Button buttonR1 = new JoystickButton(RIGHT_JOY, 1);
 	public Button buttonR3 = new JoystickButton(RIGHT_JOY, 3);
 	public Button buttonR4 = new JoystickButton(RIGHT_JOY, 4);
+	public Button buttonR5 = new JoystickButton(RIGHT_JOY, 5);
+	public Button buttonR6 = new JoystickButton(RIGHT_JOY, 6);
+	public Button buttonR11 = new JoystickButton(RIGHT_JOY, 11);
+	public Button buttonR12 = new JoystickButton(RIGHT_JOY, 12);
 	public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
@@ -68,10 +76,16 @@ public class OI {
 		{
 			buttonL1.whenPressed(new BarMoving(-.5));
 			buttonL3.whenPressed(new Intake("Hatch")); 
-			buttonL4.whenPressed(new Intake("Cargo"));
+			buttonL3.whenReleased(new IntakeTailUp());
+			buttonL4.whenPressed(new place("Hatch", false)); 
 			buttonR1.whenPressed(new BarMoving(.5)); 
-			buttonR3.whenPressed(new place("Hatch", false)); 
+			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whenPressed(new place("Cargo", false)); 
+			buttonR5.whenPressed(new CrossIntake());
+			buttonR6.whenPressed(new CrossRelease());
+			buttonR11.whenPressed(new CIntPneums(true));
+			buttonR12.whenPressed(new CIntPneums(false));
+
 			//buttonR3.whenPressed(new Invert(0));//normal
 			// buttonR4.whenPressed(new Invert(1));//inverted
 		}

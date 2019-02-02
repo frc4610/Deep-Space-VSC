@@ -18,6 +18,7 @@ import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.CIntake;
+import org.usfirst.frc.team4610.robot.subsystems.Crossbow;
 import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4610.robot.subsystems.FourBar;
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
 	public static Lidar lidar;
 	public static AHRS gyro;
 	public static Tail tail;
+	public static Crossbow cbow;
 	public static FourBar bar;//Later, test with pidtesting after this subsystem works
 	public static CIntake intake;
 	public static Pneum pneum;
@@ -94,14 +96,18 @@ public class Robot extends TimedRobot {
 		lidar = new Lidar(new DigitalInput(0));// the number is for the port
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
-		pneum= new Pneum(1,2);//see subsystem for the parameters
-		tail = new Tail(3,4,5,6,1);//see subsystem for the parameters
+		//pneum= new Pneum(1,2);//see subsystem for the parameters
+		tail = new Tail(3,7,1);//see subsystem for the parameters
+		cbow = new Crossbow(1,5,2,6);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
-		intake = new CIntake(1,2,2);//see subsystem for the parameters
-		bar = new FourBar(3, 4, 3, 4);//see subsystem for the parameters
+		intake = new CIntake(0,4,2);//see subsystem for the parameters
+		bar = new FourBar(3, 4);//see subsystem for the parameters
+		//crowbow grip is 1,5 in ds
+		//2,6 is crossbow out
+		//
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -130,9 +136,8 @@ public class Robot extends TimedRobot {
 		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
 		tail.resetEject();
-		tail.tailUp();
-		bar.barHighG();
-		intake.cInAdjustF();
+		//bar.barHighG();
+		intake.cInAdjustR();
 		bar.resetBEnc();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -215,6 +220,7 @@ public class Robot extends TimedRobot {
 		checkTeleop();//checks for override
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
+		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
@@ -237,9 +243,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
+		//SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
+		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
