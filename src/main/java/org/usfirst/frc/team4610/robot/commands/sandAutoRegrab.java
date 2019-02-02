@@ -28,7 +28,7 @@ public class sandAutoRegrab extends CommandGroup {
     }
     addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
     addSequential(new place("Hatch", true));//params in command
-    addSequential(new forward(Robot.encMultiFt*.2/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+    addSequential(new forward(-Robot.encMultiFt*.2/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
     if(pos.equals("l"))
     {
       addSequential(new turn(90, Robot.autoSpeed));
