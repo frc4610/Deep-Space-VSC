@@ -191,10 +191,10 @@ public class Robot extends TimedRobot {
 		{
 			autonomousCommand = new sandAutoPlace(position.getSelected());//use params to better use left/right/hab lvl for command groups called. Auto functions still untested
 		}
-		/*else if (goal.getSelected().equals("r"))
+		else if (goal.getSelected().equals("r"))
 		{
-			autonomousCommand = new sandAutoBasic();
-		}
+			autonomousCommand = new sandAutoPlace(position.getSelected());//Auto functions still untested
+		}/*
 		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian unmae until 
 		{
 			autonomousCommand = new sandAutoBasic();
