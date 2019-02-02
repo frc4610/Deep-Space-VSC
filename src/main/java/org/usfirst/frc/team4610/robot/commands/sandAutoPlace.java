@@ -15,16 +15,25 @@ public class sandAutoPlace extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public sandAutoPlace() {
+  public sandAutoPlace(String pos) {
     requires(Robot.driveBase);
     requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
-    addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
-    addSequential(new forward(Robot.encMultiFt/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
+    addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    if(pos.equals("L"))
+    {
+      addSequential(new turn(10, Robot.autoSpeed));
+    }
+    else if (pos.equals("R"))
+    {
+      addSequential(new turn(-10, Robot.autoSpeed));
+    }
+    addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
     addSequential(new place("Hatch", true));//params in command
 
     //for future commands, most likely add turns to get to a good angle, drive forward and grab. turn again to re-aim and place again for "d".
     //I have yet to do this as so many placeholders will be there. Test using my list before this gets furthered
-
+    //after the forst place, you need to move ~9.8 ft to be alighned with the center of loading dock
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

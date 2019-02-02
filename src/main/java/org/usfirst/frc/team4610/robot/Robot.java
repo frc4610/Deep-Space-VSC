@@ -189,7 +189,7 @@ public class Robot extends TimedRobot {
 		}
 		else if (goal.getSelected().equals("h"))
 		{
-			autonomousCommand = new sandAutoPlace();//use params to better use left/right/hab lvl for command groups called. Auto functions still untested
+			autonomousCommand = new sandAutoPlace(position.getSelected());//use params to better use left/right/hab lvl for command groups called. Auto functions still untested
 		}
 		/*else if (goal.getSelected().equals("r"))
 		{
