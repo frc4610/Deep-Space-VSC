@@ -221,6 +221,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
@@ -247,6 +248,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 

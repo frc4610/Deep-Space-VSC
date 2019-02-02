@@ -11,11 +11,9 @@ import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeTailUp extends Command {
-
-
-  public IntakeTailUp() {
-    requires(Robot.tail);
+public class GripRelease extends Command {
+  public GripRelease() {
+    requires(Robot.cbow);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,7 +21,7 @@ public class IntakeTailUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.tail.tailMove(-.5);
+    Robot.cbow.release();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,19 +32,17 @@ public class IntakeTailUp extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !Robot.m_oi.buttonL5.get();
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.tail.tailMove(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.tail.tailMove(0);
   }
 }

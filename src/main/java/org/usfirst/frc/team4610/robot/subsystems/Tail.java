@@ -8,6 +8,9 @@
 package org.usfirst.frc.team4610.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -25,6 +28,9 @@ public class Tail extends Subsystem {
   {
     //first is the 1st port the ds is plugged into, second is the second. The E and T for these are for the eject and tail mechanisms respectively. limitPort is the port for the limit switch. Pretty self-explanitory
     this.tailT = new TalonSRX(8);
+    Robot.initTalonBrake(tailT);
+    tailT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    tailT.setSelectedSensorPosition(0, 0 ,10);
     this.ejectDS56 = new DoubleSolenoid(0, firstE, secondE);
     this.tailLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
   }
@@ -35,15 +41,19 @@ public class Tail extends Subsystem {
   }
   public void eject()
   {
-    ejectDS56.set(DoubleSolenoid.Value.kForward);
+    ejectDS56.set(DoubleSolenoid.Value.kReverse);
   }
   public void resetEject()
   {
-    ejectDS56.set(DoubleSolenoid.Value.kReverse);
+    ejectDS56.set(DoubleSolenoid.Value.kForward);
   }
   public boolean isUp()
   {
     return !tailLimit.get();
+  }
+  public double getEncValue()
+  {
+    return tailT.getSelectedSensorPosition();
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

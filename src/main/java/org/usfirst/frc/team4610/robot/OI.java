@@ -37,11 +37,14 @@ public class OI {
 	public Button buttonR4 = new JoystickButton(RIGHT_JOY, 4);
 	public Button buttonR5 = new JoystickButton(RIGHT_JOY, 5);
 	public Button buttonR6 = new JoystickButton(RIGHT_JOY, 6);
+	public Button buttonR7 = new JoystickButton(RIGHT_JOY, 7);
+	public Button buttonR8 = new JoystickButton(RIGHT_JOY, 8);
 	public Button buttonR11 = new JoystickButton(RIGHT_JOY, 11);
 	public Button buttonR12 = new JoystickButton(RIGHT_JOY, 12);
 	public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
+	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);
 	//public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -74,15 +77,17 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-			buttonL1.whenPressed(new BarMoving(-.5));
+			buttonL1.whenPressed(new BarMoving(-.5)); 
 			buttonL3.whenPressed(new Intake("Hatch")); 
-			buttonL3.whenReleased(new IntakeTailUp());
+			buttonL5.whenPressed(new IntakeTailUp());
 			buttonL4.whenPressed(new place("Hatch", false)); 
 			buttonR1.whenPressed(new BarMoving(.5)); 
 			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whenPressed(new place("Cargo", false)); 
 			buttonR5.whenPressed(new CrossIntake());
 			buttonR6.whenPressed(new CrossRelease());
+			buttonR7.whenPressed(new CrossIntake());
+			buttonR8.whenPressed(new CrossRelease());
 			buttonR11.whenPressed(new CIntPneums(true));
 			buttonR12.whenPressed(new CIntPneums(false));
 

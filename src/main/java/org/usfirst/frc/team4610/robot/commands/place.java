@@ -41,6 +41,7 @@ private Timer timer;
         {
             Robot.tail.eject();
         }
+        timer.start();
         
     	//check to see if safe, stop drive base
     }
@@ -66,6 +67,7 @@ private Timer timer;
             Robot.tail.resetEject();
         }
         timer.stop();
+        timer.reset();
     	//stop all moving parts save for drive base
     }
 
@@ -81,5 +83,6 @@ private Timer timer;
             Robot.tail.resetEject();
         }
         timer.stop();
+        timer.reset();
     }
 }

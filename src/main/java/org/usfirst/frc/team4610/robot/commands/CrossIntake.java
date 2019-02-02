@@ -8,13 +8,10 @@
 package org.usfirst.frc.team4610.robot.commands;
 import org.usfirst.frc.team4610.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.Timer;
 
 public class CrossIntake extends Command {
-  private Timer timer;
   public CrossIntake() {
     requires(Robot.cbow);
-    this.timer = new Timer();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,7 +20,6 @@ public class CrossIntake extends Command {
   @Override
   protected void initialize() {
     Robot.cbow.crossOut();
-    timer.start();
 
   }
 
@@ -35,20 +31,18 @@ public class CrossIntake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timer.get() >= .2;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    timer.stop();
-    Robot.cbow.grip();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    timer.stop();
+
   }
 }

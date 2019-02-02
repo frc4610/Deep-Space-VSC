@@ -35,7 +35,7 @@ public class FourBar extends Subsystem {
     Robot.initTalonBrake(fbV);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
-    fbV.setInverted(true);
+    fbT.setInverted(true);
     //fbV.follow(fbT);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);
