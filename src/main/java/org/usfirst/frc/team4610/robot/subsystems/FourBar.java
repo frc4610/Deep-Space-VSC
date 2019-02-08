@@ -32,11 +32,13 @@ public class FourBar extends Subsystem {
     this.fbT = new TalonSRX(6);
     this.fbV = new VictorSPX(7);
     Robot.initTalonBrake(fbT);
+    fbT.configClosedloopRamp(3, 0);
+    fbV.configClosedloopRamp(3, 0);
     Robot.initTalonBrake(fbV);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
     fbT.setInverted(true);
-    //fbV.follow(fbT);
+    fbV.follow(fbT);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);
   }

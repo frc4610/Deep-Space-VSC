@@ -23,6 +23,7 @@ import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4610.robot.subsystems.FourBar;
 import org.usfirst.frc.team4610.robot.subsystems.Lidar;
+import org.usfirst.frc.team4610.robot.subsystems.PIDtester;
 import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
 	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto
 	public static DriveBase driveBase;
 	public static Lidar lidar;
+	public static PIDtester testTail;
 	public static AHRS gyro;
 	public static Tail tail;
 	public static Crossbow cbow;
@@ -96,7 +98,7 @@ public class Robot extends TimedRobot {
 		lidar = new Lidar(new DigitalInput(0));// the number is for the port
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
-		//pneum= new Pneum(1,2);//see subsystem for the parameters
+		pneum= new Pneum(1,2);//see subsystem for the parameters
 		tail = new Tail(3,7,1);//see subsystem for the parameters
 		cbow = new Crossbow(1,5,2,6);//see subsystem for the parameters
 		tele = new tankDrive();
@@ -105,6 +107,7 @@ public class Robot extends TimedRobot {
 		autoTimeSec = 0;
 		intake = new CIntake(0,4,2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
+		//testTail = new PIDtester(1,2,3,4);
 		//crowbow grip is 1,5 in ds
 		//2,6 is crossbow out
 		//
@@ -121,6 +124,7 @@ public class Robot extends TimedRobot {
 		position.addOption("Right2", "R");
 		position.addOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
+		goal.addOption("No auto", "n");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
 		//goal.addOption("Hatch and Regrab", "r"); see below
@@ -136,7 +140,6 @@ public class Robot extends TimedRobot {
 		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
 		tail.resetEject();
-		//bar.barHighG();
 		intake.cInAdjustR();
 		bar.resetBEnc();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
@@ -183,7 +186,11 @@ public class Robot extends TimedRobot {
 		 */
 		//position lower case is HAB 1, upper is HAB 2. l, r and m
 		//goal is f is forward, h is 1 place, r is place/grab, d is 2 places (with a grab obviously)
-		if (position.getSelected().equals("m")||goal.getSelected().equals("f"))
+		if(goal.getSelected().equals("n"))
+		{
+			interrupt = true;
+		}
+		else if (position.getSelected().equals("m")||goal.getSelected().equals("f"))
 		{
 			autonomousCommand = new sandAutoBasic();
 		}
@@ -195,7 +202,7 @@ public class Robot extends TimedRobot {
 		{
 			autonomousCommand = new sandAutoPlace(position.getSelected());//Auto functions still untested
 		}/*
-		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian unmae until 
+		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian unmade until 
 		{
 			autonomousCommand = new sandAutoBasic();
 		}*/
@@ -221,13 +228,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", testTail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
-		//lidar.start();
 		driveBase.resetEnc(2);
 		tele.start();//starts teleop, may be unessecary, test further
 		// This makes sure that the autonomous stops running when
@@ -244,11 +250,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		//SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
+		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
+		/*testTail.enable();
+		testTail.setSetpoint(10000);*/
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", testTail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 

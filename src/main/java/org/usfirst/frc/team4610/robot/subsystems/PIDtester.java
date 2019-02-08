@@ -32,13 +32,13 @@ public class PIDtester extends PIDSubsystem {
     super("PIDtester", 2.0, 0.0, 0.0);// The constructor passes a name for the subsystem and the P, I and D constants that are useed when computing the motor output
     setAbsoluteTolerance(0.05);
     getPIDController().setContinuous(false); //manipulating the raw internal PID Controller
-    this.fbT = new TalonSRX(6);
-    this.fbV = new Victor(7);
+    this.fbT = new TalonSRX(8);
+    this.fbV = new Victor(2);
     Robot.initTalonBrake(fbT);
-   // Robot.initTalonBrake(fbV); - fix this later dummy boi
+    //Robot.initTalonBrake(fbV); - fix this later dummy boi
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
-    fbV.setInverted(true);
+    // fbV.setInverted(true);
     //fbV.follow(fbT);
     /*this.fbDS34 = new DoubleSolenoid(1, first, second);
     this.fbLimitTop = new DigitalInput(topPort);
@@ -60,6 +60,10 @@ protected void usePIDOutput(double output) {
   fbV.pidWrite(output);
   fbT.set(ControlMode.PercentOutput, fbV.get());
    // motor.pidWrite(output); // this is where the computed output value fromthe PIDController is applied to the motor
+}
+public double getEncValue()
+{
+  return fbT.getSelectedSensorPosition();
 }
 
 }

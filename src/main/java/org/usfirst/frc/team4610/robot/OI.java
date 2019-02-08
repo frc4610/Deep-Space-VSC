@@ -77,11 +77,11 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-			buttonL1.whenPressed(new BarMoving(-.5)); 
+			buttonL1.whenPressed(new BarMoving(-.1)); 
 			buttonL3.whenPressed(new Intake("Hatch")); 
 			buttonL5.whenPressed(new IntakeTailUp());
 			buttonL4.whenPressed(new place("Hatch", false)); 
-			buttonR1.whenPressed(new BarMoving(.5)); 
+			buttonR1.whenPressed(new BarMoving(.1)); 
 			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whenPressed(new place("Cargo", false)); 
 			buttonR5.whenPressed(new CrossIntake());

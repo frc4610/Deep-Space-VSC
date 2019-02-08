@@ -20,7 +20,7 @@ public class CrossIntake extends Command {
   @Override
   protected void initialize() {
     Robot.cbow.crossOut();
-
+    Robot.interrupt = true;
   }
 
   // Called repeatedly when this Command is scheduled to run
