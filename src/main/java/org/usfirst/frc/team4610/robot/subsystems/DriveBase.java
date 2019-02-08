@@ -19,8 +19,6 @@ public class DriveBase extends Subsystem {
 	private VictorSPX BRightMotorFollow;//br
 	private TalonSRX BLeftMotor;//bl
 	private VictorSPX FLeftMotorFollow;//fl
-	//private double leftSd;
-	//private double rightSd;
 
 	
 	public DriveBase() {
@@ -29,8 +27,6 @@ public class DriveBase extends Subsystem {
 		this.BLeftMotor = new TalonSRX(3);
 		this.BRightMotorFollow = new VictorSPX(2); 
 		this.FLeftMotorFollow = new VictorSPX(4);
-		//this.leftSd = 0;
-		//this.rightSd =0;
 		Robot.initTalonBrake(BLeftMotor);
 		Robot.initTalonBrake(FRightMotor);
 		Robot.initTalonBrake(FLeftMotorFollow);
@@ -38,6 +34,16 @@ public class DriveBase extends Subsystem {
 		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.setInverted(true);
+		/*FRightMotor.selectProfileSlot(0, 0);//not quite sure on the values, 2nd should be 0, look at section 10 on https://content.vexrobotics.com/vexpro/pdf/SoftwareReferenceManual20180113.pdf
+		FRightMotor.config_kF(0, .2, 200);//200 ms timeout, see later.
+		FRightMotor.config_kP(0, .2, 200);//in theory the control mode position should set it to a specific enc value.
+		FRightMotor.config_kI(0, 0, 200);
+		FRightMotor.config_kD(0, 0, 200);
+		BLeftMotor.selectProfileSlot(0, 0);
+		BLeftMotor.config_kF(0, .2, 200);//200 ms timeout, see later.
+		BLeftMotor.config_kP(0, .2, 200);
+		BLeftMotor.config_kI(0, 0, 200);
+		BLeftMotor.config_kD(0, 0, 200);*/
 		BRightMotorFollow.setInverted(true);
 		//FRightMotor.configClosedloopRamp(1, 0);
 		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
@@ -63,26 +69,7 @@ public class DriveBase extends Subsystem {
 		}
 
 	}
-	/*public void ramp(double targetLeft, double targetRight)
-	{
-		if((targetLeft > 0)&&(leftSd + 30 <= targetLeft))
-		{
-			leftSd+=30;
-		}
-		else if(targetLeft < 0)
-		{
-
-		}
-		if(targetRight > 0)
-		{
-
-		}
-		else if(targetRight < 0)
-		{
-			
-		}
-		Timer.delay(1);
-	}*/
+	
 	public double getEncValue(boolean motor)//if motor is true, find right motor, false gets left. Returns encoder value
 	{
 		if(motor)

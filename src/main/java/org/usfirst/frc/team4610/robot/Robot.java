@@ -23,7 +23,7 @@ import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4610.robot.subsystems.FourBar;
 import org.usfirst.frc.team4610.robot.subsystems.Lidar;
-import org.usfirst.frc.team4610.robot.subsystems.PIDtester;
+//import org.usfirst.frc.team4610.robot.subsystems.PIDtester;
 import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto
 	public static DriveBase driveBase;
 	public static Lidar lidar;
-	public static PIDtester testTail;
+	//public static PIDtester testTail;
 	public static AHRS gyro;
 	public static Tail tail;
 	public static Crossbow cbow;
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
 		goal.addOption("No auto", "n");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
-		//goal.addOption("Hatch and Regrab", "r"); see below
+		goal.addOption("Hatch and Regrab", "r"); //see below
 		//goal.addOption("Double Hatch", "d"); commented until further testing, don't want to rush too far ahead
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
@@ -222,13 +222,13 @@ public class Robot extends TimedRobot {
 		{
 			tele.start();
 		}
-		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms
+		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms, crude but works
 		autoTimeSec = autoTimer / 1000;
 		checkTeleop();//checks for override
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", testTail.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
@@ -256,7 +256,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", testTail.getEncValue());
+		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		Scheduler.getInstance().run();
 	}
 
