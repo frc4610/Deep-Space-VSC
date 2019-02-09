@@ -35,7 +35,7 @@ public class IntakeTailUp extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !Robot.m_oi.buttonL5.get();
+    return false;
   }
 
   // Called once after isFinished returns true

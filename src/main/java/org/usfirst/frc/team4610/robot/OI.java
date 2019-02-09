@@ -89,7 +89,7 @@ public class OI {
 		{
 			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
 			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
-			buttonL5.whenPressed(new IntakeTailUp());
+			buttonL5.whileHeld(new IntakeTailUp());
 			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
 			//removed functions
