@@ -15,6 +15,7 @@ import org.usfirst.frc.team4610.robot.commands.IntakeTailUp;
 import org.usfirst.frc.team4610.robot.commands.place;
 import org.usfirst.frc.team4610.robot.commands.CrossIntake;
 import org.usfirst.frc.team4610.robot.commands.CrossRelease;
+import org.usfirst.frc.team4610.robot.commands.DrivePneums;
 import org.usfirst.frc.team4610.robot.commands.GripIntake;
 import org.usfirst.frc.team4610.robot.commands.GripRelease;
 import org.usfirst.frc.team4610.robot.commands.CIntPneums;
@@ -47,6 +48,8 @@ public class OI {
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
 	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);
+	public Button buttonO3 = new JoystickButton(OP_JOY, 3);
+	public Button buttonO4 = new JoystickButton(OP_JOY, 4);
 	public Button buttonO7 = new JoystickButton(OP_JOY, 7);
 	public Button buttonO8 = new JoystickButton(OP_JOY, 8);
 	public Button buttonO9 = new JoystickButton(OP_JOY, 9);
@@ -105,6 +108,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
+			buttonO3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
+			buttonO4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
 			/* commented until placeholders are set to be used
 			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, .1));
 			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, .1));
