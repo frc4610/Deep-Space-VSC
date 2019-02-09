@@ -36,11 +36,11 @@ public class sandAutoRegrab extends CommandGroup {
     //backs up slightly as to not catch on the cargo ship when turning
     addSequential(new forward(Robot.encMultiFt*1/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
     //turns towards the nearest loading station, using a 90 degree angle and turns again later so the HAB lvl 1 doesn't get in the way
-    if(pos.equals("l"))
+    if(pos.equals("L")||pos.equals("l"))
     {
       addSequential(new turn(90, Robot.autoSpeed));
     }
-    else if (pos.equals("r"))
+    else if (pos.equals("R")||pos.equals("r"))
     {
       addSequential(new turn(-90, Robot.autoSpeed));
     }
