@@ -32,8 +32,8 @@ public class PIDtester extends PIDSubsystem {
     super("PIDtester", 2.0, 0.0, 0.0);// The constructor passes a name for the subsystem and the P, I and D constants that are useed when computing the motor output
     setAbsoluteTolerance(0.05);
     getPIDController().setContinuous(false); //manipulating the raw internal PID Controller
-    this.fbT = new TalonSRX(8);
-    this.fbV = new Victor(2);
+    //this.fbT = new TalonSRX(8);
+    //this.fbV = new Victor(2);
     Robot.initTalonBrake(fbT);
     //Robot.initTalonBrake(fbV); - fix this later dummy boi
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);

@@ -16,7 +16,7 @@ public class Pneum extends Subsystem {
 	public Pneum(int first, int second) {
 		//sets up pnuematics, first is the 1st port the ds is plugged into, second is the second. Pretty self-explanitory
 		this.compressor = new Compressor();
-		this.driveDs12 = new DoubleSolenoid(1,2);
+		this.driveDs12 = new DoubleSolenoid(1,1,2);
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

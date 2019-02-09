@@ -28,7 +28,6 @@ import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -55,7 +54,7 @@ public class Robot extends TimedRobot {
 	//https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html
 	public static Counter limCounter;
 	//public static DigitalInput testingLimit;
-	public static double encMultiFt = 435; //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
+	public static double encMultiFt = 800;//used to be 435 //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
 	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
 	public static double encShopExtra = 400; //enc value the robot gains by slide. use acc/decel motor values to nullify
 	public static double fbarPosBot = 0;// enc values for the set four bar positions
@@ -69,7 +68,7 @@ public class Robot extends TimedRobot {
 	public static int front;//is the originally front still the front, for inversion
 	public static boolean interrupt;//is the driver overriding auto?
 	public static double acceptedTurnTolerance = 5;//obvious, for auto
-	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto
+	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto, no longer used
 	public static DriveBase driveBase;
 	public static Lidar lidar;
 	//public static PIDtester testTail;
@@ -114,9 +113,6 @@ public class Robot extends TimedRobot {
 		intake = new CIntake(0,4,2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
-		//crowbow grip is 1,5 in ds
-		//2,6 is crossbow out
-		//
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -133,8 +129,8 @@ public class Robot extends TimedRobot {
 		goal.addOption("No auto", "n");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
-		goal.addOption("Hatch and Regrab", "r"); //see below
-		//goal.addOption("Double Hatch", "d"); commented until further testing, don't want to rush too far ahead
+		//goal.addOption("Hatch and Regrab", "r"); //see below
+		//goal.addOption("Double Hatch", "d"); //commented until further testing, don't want to rush too far ahead
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
 		SmartDashboard.putData("Position", position);
@@ -247,6 +243,7 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -258,10 +255,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		//for testing
-		//driveBase.set(ControlMode.Position, encMultiFt, encMultiFt);
 		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		/*testTail.enable();
 		testTail.setSetpoint(10000);*/
+		//driveBase.set(ControlMode.Position, encMultiFt, encMultiFt);
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
@@ -282,6 +279,8 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
+		motor.configPeakOutputForward(1.0, 0);
+		motor.configPeakOutputReverse(-1.0, 0);
 		motor.configClosedloopRamp(0.5, 0);
 	}
 	
@@ -291,7 +290,9 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
-		motor.configClosedloopRamp(0.75, 0);//used to be 55, test further is this value is fine
+		motor.configPeakOutputForward(1.0, 0);
+		motor.configPeakOutputReverse(-1.0, 0);
+		motor.configClosedloopRamp(0.55, 0);//used to be 75, test further is this value is fine
 	}
 	public static void initTalonCoast(VictorSPX motor) {
 		motor.setNeutralMode(NeutralMode.Coast);
@@ -299,6 +300,8 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
+		motor.configPeakOutputForward(1.0, 0);
+		motor.configPeakOutputReverse(-1.0, 0);
 		motor.configClosedloopRamp(0.5, 0);
 	}
 	
@@ -308,7 +311,9 @@ public class Robot extends TimedRobot {
 		motor.setSensorPhase(false);
 		motor.configNominalOutputForward(0.0, 0);
 		motor.configNominalOutputReverse(0.0, 0);
-		motor.configClosedloopRamp(0.75, 0);
+		motor.configPeakOutputForward(1.0, 0);
+		motor.configPeakOutputReverse(-1.0, 0);
+		motor.configClosedloopRamp(0.55, 0);
 	}
 	public static void checkTeleop()
 	{

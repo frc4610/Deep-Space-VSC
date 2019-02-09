@@ -15,8 +15,10 @@ import org.usfirst.frc.team4610.robot.commands.IntakeTailUp;
 import org.usfirst.frc.team4610.robot.commands.place;
 import org.usfirst.frc.team4610.robot.commands.CrossIntake;
 import org.usfirst.frc.team4610.robot.commands.CrossRelease;
+import org.usfirst.frc.team4610.robot.commands.GripIntake;
+import org.usfirst.frc.team4610.robot.commands.GripRelease;
 import org.usfirst.frc.team4610.robot.commands.CIntPneums;
-
+//import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,7 +33,7 @@ public class OI {
 	//mapping of joysticks
 	public  Joystick LEFT_JOY = new Joystick(0);
 	public  Joystick RIGHT_JOY = new Joystick(1);
-	public  Joystick BACKUP_JOY = new Joystick(2);
+	public  Joystick OP_JOY = new Joystick(2);
 	public Button buttonR1 = new JoystickButton(RIGHT_JOY, 1);
 	public Button buttonR3 = new JoystickButton(RIGHT_JOY, 3);
 	public Button buttonR4 = new JoystickButton(RIGHT_JOY, 4);
@@ -45,6 +47,11 @@ public class OI {
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
 	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);
+	public Button buttonO7 = new JoystickButton(OP_JOY, 7);
+	public Button buttonO8 = new JoystickButton(OP_JOY, 8);
+	public Button buttonO9 = new JoystickButton(OP_JOY, 9);
+	public Button buttonO10 = new JoystickButton(OP_JOY, 10);
+	public Button buttonO12 = new JoystickButton(OP_JOY, 12);
 	//public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -86,20 +93,25 @@ public class OI {
 			buttonR4.whenPressed(new place("Cargo", false)); 
 			buttonR5.whenPressed(new CrossIntake());
 			buttonR6.whenPressed(new CrossRelease());
-			buttonR7.whenPressed(new CrossIntake());
-			buttonR8.whenPressed(new CrossRelease());
+			buttonR7.whenPressed(new GripIntake());
+			buttonR8.whenPressed(new GripRelease());
 			buttonR11.whenPressed(new CIntPneums(true));
 			buttonR12.whenPressed(new CIntPneums(false));
-
 			//buttonR3.whenPressed(new Invert(0));//normal
-			// buttonR4.whenPressed(new Invert(1));//inverted
+			//buttonR4.whenPressed(new Invert(1));//inverted
 		}
 		else if (driver.equals("N"))
 		{
 		}
 		if(operator.equals("N"))
 		{
-			
+			/* commented until placeholders are set to be used
+			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, .1));
+			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, .1));
+			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, .1));
+			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, .1));
+			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4, .1));
+			*/
 		}
 		
 	}

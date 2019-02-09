@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4610.robot.subsystems;
 
 import org.usfirst.frc.team4610.robot.Robot;
-import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -31,24 +30,22 @@ public class DriveBase extends Subsystem {
 		Robot.initTalonBrake(FRightMotor);
 		Robot.initTalonBrake(FLeftMotorFollow);
 		Robot.initTalonBrake(BRightMotorFollow);
-		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);//maybe magrelative
 		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.setInverted(true);
-		/*FRightMotor.selectProfileSlot(0, 0);//not quite sure on the values, 2nd should be 0, look at section 10 on https://content.vexrobotics.com/vexpro/pdf/SoftwareReferenceManual20180113.pdf
-		FRightMotor.config_kF(0, .2, 200);//200 ms timeout, see later.
-		FRightMotor.config_kP(0, .2, 200);//in theory the control mode position should set it to a specific enc value.
-		FRightMotor.config_kI(0, 0, 200);
-		FRightMotor.config_kD(0, 0, 200);
-		BLeftMotor.selectProfileSlot(0, 0);
-		BLeftMotor.config_kF(0, .2, 200);
-		BLeftMotor.config_kP(0, .2, 200);
-		BLeftMotor.config_kI(0, 0, 200);
-		BLeftMotor.config_kD(0, 0, 200);*/
-		BRightMotorFollow.setInverted(true);
-		//FRightMotor.configClosedloopRamp(1, 0);
 		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
-		//BLeftMotor.configClosedloopRamp(1, 0);
+		FRightMotor.selectProfileSlot(0, 0);//look at section 10 on https://content.vexrobotics.com/vexpro/pdf/SoftwareReferenceManual20180113.pdf
+		FRightMotor.config_kF(0, .2, 10);//10ms timeout prolly gonna be .2 to .3
+		FRightMotor.config_kP(0, .15, 10);
+		FRightMotor.config_kI(0, 0, 10);//prolly gonna change, used if never quite reaches target, start with p/100 or p/10
+		FRightMotor.config_kD(0, 0, 10);//set if acceraction ramps up to fast, start with px10
+		BLeftMotor.selectProfileSlot(0, 0);
+		BLeftMotor.config_kF(0, .2, 10);//
+		BLeftMotor.config_kP(0, .15, 10);
+		BLeftMotor.config_kI(0, 0, 10);
+		BLeftMotor.config_kD(0, 0, 10);
+		BRightMotorFollow.setInverted(true);
 		FLeftMotorFollow.follow(BLeftMotor);
 		BRightMotorFollow.follow(FRightMotor);
 	}
@@ -103,7 +100,7 @@ public class DriveBase extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new tankDrive());
+    	//setDefaultCommand(new tankDrive());
     }
 }
 
