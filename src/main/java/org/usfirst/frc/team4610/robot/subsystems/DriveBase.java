@@ -37,9 +37,9 @@ public class DriveBase extends Subsystem {
 		BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.selectProfileSlot(0, 0);//look at section 10 on https://content.vexrobotics.com/vexpro/pdf/SoftwareReferenceManual20180113.pdf
 		FRightMotor.config_kF(0, .2, 10);//10ms timeout prolly gonna be .2 to .3
-		FRightMotor.config_kP(0, .15, 10);
+		FRightMotor.config_kP(0, .15, 10);//prolly find it using ((Desired speed * 1023)/TargetErrItShouldBeAtDesiredSpeed)
 		FRightMotor.config_kI(0, 0, 10);//prolly gonna change, used if never quite reaches target, start with p/100 or p/10
-		FRightMotor.config_kD(0, 0, 10);//set if acceraction ramps up to fast, start with px10
+		FRightMotor.config_kD(0, 0, 10);//set if acceraction ramps up to fast, start with p*10
 		BLeftMotor.selectProfileSlot(0, 0);//Set it to be the same as FRight
 		BLeftMotor.config_kF(0, .2, 10);
 		BLeftMotor.config_kP(0, .15, 10);
@@ -48,6 +48,7 @@ public class DriveBase extends Subsystem {
 		BRightMotorFollow.setInverted(true);
 		FLeftMotorFollow.follow(BLeftMotor);
 		BRightMotorFollow.follow(FRightMotor);
+		
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
