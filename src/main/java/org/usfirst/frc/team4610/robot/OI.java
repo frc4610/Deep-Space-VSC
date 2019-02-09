@@ -18,7 +18,7 @@ import org.usfirst.frc.team4610.robot.commands.CrossRelease;
 import org.usfirst.frc.team4610.robot.commands.DrivePneums;
 import org.usfirst.frc.team4610.robot.commands.GripIntake;
 import org.usfirst.frc.team4610.robot.commands.GripRelease;
-import org.usfirst.frc.team4610.robot.commands.CIntPneums;
+//import org.usfirst.frc.team4610.robot.commands.CIntPneums;
 //import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
@@ -87,19 +87,14 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-			buttonL1.whenPressed(new BarMoving(-.1)); 
-			buttonL3.whenPressed(new Intake("Hatch")); 
+			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
+			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
 			buttonL5.whenPressed(new IntakeTailUp());
-			buttonL4.whenPressed(new place("Hatch", false)); 
-			buttonR1.whenPressed(new BarMoving(.1)); 
 			buttonR3.whenPressed(new Intake("Cargo"));
-			buttonR4.whenPressed(new place("Cargo", false)); 
-			buttonR5.whenPressed(new CrossIntake());
-			buttonR6.whenPressed(new CrossRelease());
-			buttonR7.whenPressed(new GripIntake());
-			buttonR8.whenPressed(new GripRelease());
-			buttonR11.whenPressed(new CIntPneums(true));
-			buttonR12.whenPressed(new CIntPneums(false));
+			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
+			//removed functions
+			//buttonR11.whenPressed(new CIntPneums(true));
+			//buttonR12.whenPressed(new CIntPneums(false));
 			//buttonR3.whenPressed(new Invert(0));//normal
 			//buttonR4.whenPressed(new Invert(1));//inverted
 		}
@@ -108,8 +103,14 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
-			buttonO4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
+			buttonL1.whenPressed(new BarMoving(-.1)); //bar also should be operator, look at cross' comment
+			buttonR1.whenPressed(new BarMoving(.1)); 
+			buttonO3.whenPressed(new Intake("Hatch"));
+			buttonO4.whileHeld(new place("Hatch", false));//whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
+			buttonR5.whenPressed(new CrossIntake());//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
+			buttonR6.whenPressed(new CrossRelease());// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonR7.whenPressed(new GripIntake());
+			buttonR8.whenPressed(new GripRelease());
 			/* commented until placeholders are set to be used
 			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, .1));
 			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, .1));

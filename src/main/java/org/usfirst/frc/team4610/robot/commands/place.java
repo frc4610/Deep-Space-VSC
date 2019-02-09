@@ -53,7 +53,8 @@ private Timer timer;
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timer.get() >= .5||(Robot.interrupt && auto);//sensor place/ mechanism moved || Robot.interrupted;
+        return false;
+        //return timer.get() >= .5||(Robot.interrupt && auto);//older return after 5 seconds, kept here if we want to revert back to original
     }
 
     // Called once after isFinished returns true
