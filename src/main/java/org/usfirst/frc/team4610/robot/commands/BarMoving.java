@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team4610.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,7 +34,7 @@ private double speed;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.bar.setBar(speed);
+    Robot.bar.setBar(ControlMode.PercentOutput, speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -57,13 +59,13 @@ private double speed;
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.bar.setBar(0);
+    Robot.bar.setBar(ControlMode.PercentOutput, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.bar.setBar(0);
+    Robot.bar.setBar(ControlMode.PercentOutput, 0);
   }
 }

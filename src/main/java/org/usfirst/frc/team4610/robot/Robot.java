@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
-		intake = new CIntake(0,4,2);//see subsystem for the parameters
+		intake = new CIntake(2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
 		position = new SendableChooser<>();
@@ -134,6 +134,7 @@ public class Robot extends TimedRobot {
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
 		SmartDashboard.putData("Position", position);
+		SmartDashboard.putData("Goal", goal);
 		SmartDashboard.putData("Driver", driver);
 		SmartDashboard.putData("Operator", operator);
 		//.getSelected to get value for smart dash board values
@@ -142,7 +143,7 @@ public class Robot extends TimedRobot {
 		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
 		tail.resetEject();
-		intake.cInAdjustR();
+		//intake.cInAdjustR();
 		bar.resetBEnc();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());

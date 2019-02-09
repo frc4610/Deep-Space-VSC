@@ -32,21 +32,25 @@ public class FourBar extends Subsystem {
     this.fbT = new TalonSRX(6);
     this.fbV = new VictorSPX(7);
     Robot.initTalonBrake(fbT);
+    Robot.initTalonBrake(fbV);
     fbT.configClosedloopRamp(3, 0);
     fbV.configClosedloopRamp(3, 0);
-    Robot.initTalonBrake(fbV);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
     fbT.setInverted(true);
+    fbT.selectProfileSlot(0, 0);//Set it to be the correct values, test
+		fbT.config_kF(0, 0, 10);
+		fbT.config_kP(0, 0, 10);
+		fbT.config_kI(0, 0, 10);
+		fbT.config_kD(0, 0, 10);
     fbV.follow(fbT);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);
   }
   
-  public void setBar(double speed)
+  public void setBar(ControlMode mode, double speed)
   {
-    fbV.set(ControlMode.PercentOutput, speed);//is inverted, test to check if works
-    fbT.set(ControlMode.PercentOutput, speed);
+    fbT.set(mode, speed);
   }
   public boolean barTop()
   {

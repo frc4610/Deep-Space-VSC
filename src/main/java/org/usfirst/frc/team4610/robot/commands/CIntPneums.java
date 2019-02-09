@@ -26,11 +26,11 @@ public class CIntPneums extends Command {
     Robot.interrupt = true;//make sure this is still right
     if(out)
     {
-      Robot.intake.cInAdjustF();
+      //Robot.intake.cInAdjustF();
     }
     else
     {
-      Robot.intake.cInAdjustR();
+      //Robot.intake.cInAdjustR();
     }
   }
 
