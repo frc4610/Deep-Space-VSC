@@ -9,11 +9,11 @@ package org.usfirst.frc.team4610.robot.commands;
 import org.usfirst.frc.team4610.robot.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class sandAutoRegrab extends CommandGroup {
+public class sandAutoDouble extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public sandAutoRegrab(String pos) {
+  public sandAutoDouble(String pos) {
     requires(Robot.driveBase);
     requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
     //delay at beginning
@@ -66,6 +66,21 @@ public class sandAutoRegrab extends CommandGroup {
     }
     //finishes moving to the loading station, will simoy pickup (hopefully) by raming into the loading station, may want to be 17
     addSequential(new forward(-Robot.encMultiFt*18/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// 19 may be a bit large, test furhter
+    //moves back towards the cargo ship
+    addSequential(new forward(Robot.encMultiFt*8/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+    //turn to face the nearest hatch panel on the cargo ship
+    if(pos.equals("L")||pos.equals("l"))
+    {
+      addSequential(new turn(146, Robot.autoSpeed));
+    }
+    else if (pos.equals("R")||pos.equals("r"))
+    {
+      addSequential(new turn(-146, Robot.autoSpeed));
+    }
+    //moves towards the nearest cargoship hatch panel slot
+    addSequential(new forward(-Robot.encMultiFt*13.5/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+    //places 2nd hatch
+    addSequential(new place("Hatch", true));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

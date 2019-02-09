@@ -187,6 +187,7 @@ public class Robot extends TimedRobot {
 		 */
 		//position lower case is HAB 1, upper is HAB 2. l, r and m
 		//goal is f is forward, h is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		//Note: all auto code is either going to be inverted back to the front if we can't drive off backwards, if so set it to the crossbow
 		if(goal.getSelected().equals("n"))
 		{
 			interrupt = true;
@@ -203,7 +204,7 @@ public class Robot extends TimedRobot {
 		{
 			autonomousCommand = new sandAutoPlace(position.getSelected());//Auto functions still untested
 		}/*
-		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian unmade until 
+		else if (goal.getSelected().equals("d")) for now I've commented this out until the rest of auto is tested, will remian as such until the rest of auto is tested 
 		{
 			autonomousCommand = new sandAutoBasic();
 		}*/
