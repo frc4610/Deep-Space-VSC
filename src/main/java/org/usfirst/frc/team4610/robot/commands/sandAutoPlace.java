@@ -17,9 +17,12 @@ public class sandAutoPlace extends CommandGroup {
    */
   public sandAutoPlace(String pos) {
     requires(Robot.driveBase);
-    requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
+    requires(Robot.tail);//may change to to the intake's hatch thing. still uncertain
+    //delays at beginning
     addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
+    //moves off the HAB, may be 5-8 ft instead, test
     addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    //turns towards nearest cargoship hatch panel place
     if(pos.equals("L"))
     {
       addSequential(new turn(10, Robot.autoSpeed));
@@ -28,7 +31,9 @@ public class sandAutoPlace extends CommandGroup {
     {
       addSequential(new turn(-10, Robot.autoSpeed));
     }
+    //moves towards the cargoship
     addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    //places the preloaded hatch panel
     addSequential(new place("Hatch", true));//params in command
 
     //for future commands, most likely add turns to get to a good angle, drive forward and grab. turn again to re-aim and place again for "d".

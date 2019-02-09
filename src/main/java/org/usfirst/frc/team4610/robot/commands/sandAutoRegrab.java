@@ -16,8 +16,11 @@ public class sandAutoRegrab extends CommandGroup {
   public sandAutoRegrab(String pos) {
     requires(Robot.driveBase);
     requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
+    //delay at beginning
     addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
+    //moves off of HAB, may need to be somewhere between 5-8 ft instead, test
     addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    //turns towards the nearest hatch panel on front of the cargo ship, depening on the starting position
     if(pos.equals("L"))
     {
       addSequential(new turn(-10, Robot.autoSpeed));
@@ -26,9 +29,13 @@ public class sandAutoRegrab extends CommandGroup {
     {
       addSequential(new turn(10, Robot.autoSpeed));
     }
+    //finishes moving towards the cargoship's front
     addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// enc values must be needed distance. test extensivly
+    //places the pre-loaded hatch panel
     addSequential(new place("Hatch", true));//params in command
+    //backs up slightly as to not catch on the cargo ship when turning
     addSequential(new forward(-Robot.encMultiFt*.2/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+    //turns towards the nearest loading station, using a 90 degree angle and turns again later so the HAB lvl 1 doesn't get in the way
     if(pos.equals("l"))
     {
       addSequential(new turn(90, Robot.autoSpeed));
@@ -37,7 +44,7 @@ public class sandAutoRegrab extends CommandGroup {
     {
       addSequential(new turn(-90, Robot.autoSpeed));
     }
-
+    //if it already is 10 degrees off from the turn post HAB lvl 2, compensate for that
     if(pos.equals("L"))
     {
       addSequential(new turn(10, Robot.autoSpeed));
@@ -46,9 +53,9 @@ public class sandAutoRegrab extends CommandGroup {
     {
       addSequential(new turn(-10, Robot.autoSpeed));
     }
-
+    //goes the nessecary amount of ft to make the 90 degree turn for loading station
     addSequential(new forward(Robot.encMultiFt*9.8/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
-
+    //makes the 90 degree turn for the loading station
     if(pos.equals("L")||pos.equals("l"))
     {
       addSequential(new turn(90, Robot.autoSpeed));
@@ -57,7 +64,7 @@ public class sandAutoRegrab extends CommandGroup {
     {
       addSequential(new turn(-90, Robot.autoSpeed));
     }
-
+    //finishs moving to the loading station, will simoy pickup (hopefully) by raming into the loading station
     addSequential(new forward(Robot.encMultiFt*19/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));// 19 may be a bit large, test furhter
     // Add Commands here:
     // e.g. addSequential(new Command1());

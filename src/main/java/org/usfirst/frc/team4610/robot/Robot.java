@@ -28,6 +28,7 @@ import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -250,6 +251,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		//for testing
+		//driveBase.set(ControlMode.Position, encMultiFt, encMultiFt);
 		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		/*testTail.enable();
 		testTail.setSetpoint(10000);*/

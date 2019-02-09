@@ -40,7 +40,7 @@ public class DriveBase extends Subsystem {
 		FRightMotor.config_kI(0, 0, 200);
 		FRightMotor.config_kD(0, 0, 200);
 		BLeftMotor.selectProfileSlot(0, 0);
-		BLeftMotor.config_kF(0, .2, 200);//200 ms timeout, see later.
+		BLeftMotor.config_kF(0, .2, 200);
 		BLeftMotor.config_kP(0, .2, 200);
 		BLeftMotor.config_kI(0, 0, 200);
 		BLeftMotor.config_kD(0, 0, 200);*/
