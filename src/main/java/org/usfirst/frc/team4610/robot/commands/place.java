@@ -37,7 +37,7 @@ private Timer timer;
         {
             Robot.intake.setIntake(-.5);
         }
-        else if(object.equals("Hatch"))
+        else if(object.equals("Hatch")&&!(auto&&Robot.interrupt))
         {
             Robot.tail.eject();
         }
