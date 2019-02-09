@@ -15,7 +15,7 @@ public class sandAutoBasic extends CommandGroup {
         //dealys at beginning
     	addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
         //simply leaves the HAB, may need to be 5-8, test
-        addSequential(new forward(-Robot.encMultiFt*4/*number of move, multi by the enc multi value*/, Robot.autoSpeed/*speed left then right*/, Robot.autoSpeed));
+        addSequential(new forward(-Robot.encMultiFt*4/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));
     	//addSequential(new place(/*hatch*/));
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -12,15 +12,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class forward extends Command {
 
 	private double encValue;
-	private double speedR;
-	private double speedL;
+	//private double speedR;
+	//private double speedL;
 	
-    public forward(double distance, double SpeedL, double SpeedR) {
+    public forward(double distance/*, double SpeedL, double SpeedR*/) {
     	//go forward with different or same speeds on each side
     	requires(Robot.driveBase);
     	this.encValue = distance;
-    	this.speedR = SpeedR;
-    	this.speedL = SpeedL;
+    	//this.speedR = SpeedR;
+    	//this.speedL = SpeedL;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -33,7 +33,7 @@ public class forward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveBase.set(ControlMode.PercentOutput, speedL, speedR);
+    	Robot.driveBase.set(ControlMode.Position, encValue, encValue);
     	//move at a speed after testing. may need to be a variable
     }
 

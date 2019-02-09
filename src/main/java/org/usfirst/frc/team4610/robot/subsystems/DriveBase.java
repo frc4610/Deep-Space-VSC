@@ -40,8 +40,8 @@ public class DriveBase extends Subsystem {
 		FRightMotor.config_kP(0, .15, 10);
 		FRightMotor.config_kI(0, 0, 10);//prolly gonna change, used if never quite reaches target, start with p/100 or p/10
 		FRightMotor.config_kD(0, 0, 10);//set if acceraction ramps up to fast, start with px10
-		BLeftMotor.selectProfileSlot(0, 0);
-		BLeftMotor.config_kF(0, .2, 10);//
+		BLeftMotor.selectProfileSlot(0, 0);//Set it to be the same as FRight
+		BLeftMotor.config_kF(0, .2, 10);
 		BLeftMotor.config_kP(0, .15, 10);
 		BLeftMotor.config_kI(0, 0, 10);
 		BLeftMotor.config_kD(0, 0, 10);
