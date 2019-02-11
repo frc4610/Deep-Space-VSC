@@ -53,8 +53,8 @@ private Timer timer;
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Robot.interrupt && auto)||(timer.get() >= .5 && auto);
-        //return timer.get() >= .5||(Robot.interrupt && auto);//older return after 5 seconds, kept here if we want to revert back to original
+        return (Robot.interrupt || timer.get() >= .5) && auto;
+        //return timer.get() >= .5||(Robot.interrupt && auto);//older return after 5 seconds in tele, kept here if we want to revert back to original
     }
 
     // Called once after isFinished returns true

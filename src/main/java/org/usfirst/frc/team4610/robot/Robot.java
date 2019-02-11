@@ -228,11 +228,10 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		if(interrupt)
 		{
-			tele.start();
+			tele.start();//once interrupted starts teleop. All auto functons should automatically stop as well
 		}
 		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms, crude but works
 		autoTimeSec = autoTimer / 1000;
-		checkTeleop();//checks for override
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
@@ -243,7 +242,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		driveBase.resetEnc(2);
-		tele.start();//starts teleop, may be unessecary, test further
+		tele.start();//starts teleop
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -259,11 +258,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		//for testing
+		//misc values for the drive team to know whats up
 		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
-		/*testTail.enable();
-		testTail.setSetpoint(10000);*/
-		//driveBase.set(ControlMode.Position, encMultiFt, encMultiFt);
+		if(intake.isCargoIn())
+		{
+			SmartDashboard.putString("Intake Status", "Full");
+		}
+		else
+		{
+			SmartDashboard.putString("Intake Status", "Empty");
+		}
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
@@ -297,7 +301,7 @@ public class Robot extends TimedRobot {
 		motor.configNominalOutputReverse(0.0, 0);
 		motor.configPeakOutputForward(1.0, 0);
 		motor.configPeakOutputReverse(-1.0, 0);
-		motor.configClosedloopRamp(0.55, 0);//used to be 75, test further is this value is fine
+		motor.configClosedloopRamp(0.55, 0);//used to be .75, test further, this value is fine prolly
 	}
 	public static void initTalonCoast(VictorSPX motor) {
 		motor.setNeutralMode(NeutralMode.Coast);

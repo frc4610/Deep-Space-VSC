@@ -33,8 +33,8 @@ public class FourBar extends Subsystem {
     this.fbV = new VictorSPX(7);
     Robot.initTalonBrake(fbT);
     Robot.initTalonBrake(fbV);
-    fbT.configClosedloopRamp(3, 0);
-    fbV.configClosedloopRamp(3, 0);
+    fbT.configClosedloopRamp(1, 0);//might want to be a lot bigger, but for realistic reasons is at 1 currnetly (3 max?)
+    fbV.configClosedloopRamp(1, 0);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
     fbT.setInverted(true);

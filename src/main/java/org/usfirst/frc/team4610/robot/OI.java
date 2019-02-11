@@ -89,7 +89,6 @@ public class OI {
 		{
 			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
 			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
-			buttonL5.whileHeld(new IntakeTailUp());
 			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
 			//removed functions
@@ -106,6 +105,7 @@ public class OI {
 			buttonL1.whenPressed(new BarMoving(-.1)); //bar also should be operator, look at cross' comment
 			buttonR1.whenPressed(new BarMoving(.1)); 
 			buttonO3.whenPressed(new Intake("Hatch"));
+			buttonL5.whileHeld(new IntakeTailUp());
 			buttonO4.whileHeld(new place("Hatch", false));//whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
 			buttonR5.whenPressed(new CrossIntake());//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
 			buttonR6.whenPressed(new CrossRelease());// a possible to solution to button problem could be a button to switch between tail/cintake control
