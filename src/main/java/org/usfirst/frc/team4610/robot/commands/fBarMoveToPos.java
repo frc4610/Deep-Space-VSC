@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class fBarMoveToPos extends Command {
   private double pos;
+  private double sPos;
   public fBarMoveToPos(double Pos) {
     requires(Robot.bar);
     this.pos = Pos;
@@ -26,6 +27,7 @@ public class fBarMoveToPos extends Command {
   @Override
   protected void initialize() {
     Robot.interrupt = true;
+    this.sPos = Robot.bar.getEncValue();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -37,13 +39,13 @@ public class fBarMoveToPos extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(pos > Robot.bar.getEncValue())
+    if(pos > sPos)
     {
-      return pos >= Robot.bar.getEncValue();
+      return pos <= Robot.bar.getEncValue();
     }
     else
     {
-      return pos <= Robot.bar.getEncValue();
+      return pos >= Robot.bar.getEncValue();
     }
   }
 

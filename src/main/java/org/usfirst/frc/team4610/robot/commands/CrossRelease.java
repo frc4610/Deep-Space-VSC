@@ -9,10 +9,13 @@ package org.usfirst.frc.team4610.robot.commands;
 import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 
 public class CrossRelease extends Command {
+  private Timer timer;
   public CrossRelease() {
     requires(Robot.cbow);
+    this.timer = new Timer();
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -22,6 +25,7 @@ public class CrossRelease extends Command {
   protected void initialize() {
     Robot.interrupt = true;
     Robot.cbow.crossIn();
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -32,12 +36,15 @@ public class CrossRelease extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return timer.get() >= .5;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.cbow.release();
+    timer.stop();
+    timer.reset();
 
   }
 
@@ -45,6 +52,7 @@ public class CrossRelease extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-
+    timer.stop();
+    timer.reset();
   }
 }

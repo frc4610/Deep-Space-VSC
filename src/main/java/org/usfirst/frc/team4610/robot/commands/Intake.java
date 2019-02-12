@@ -14,6 +14,7 @@ import org.usfirst.frc.team4610.robot.Robot;
 public class Intake extends Command {
 
   private String object;
+  IntakeTailUp fix = new IntakeTailUp();
 
   public Intake(String Object) {
     //Intakes a hatch or Cargo
@@ -71,6 +72,7 @@ public class Intake extends Command {
         else if(object.equals("Hatch"))
         {
             Robot.tail.tailMove(0);//add new command to re put tail up
+            fix.start();
         }
   }
 
