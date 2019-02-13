@@ -26,10 +26,10 @@ public class DriveBase extends Subsystem {
 		this.BLeftMotor = new TalonSRX(3);
 		this.BRightMotorFollow = new VictorSPX(2); 
 		this.FLeftMotorFollow = new VictorSPX(4);
-		Robot.initTalonBrake(BLeftMotor);
-		Robot.initTalonBrake(FRightMotor);
-		Robot.initTalonBrake(FLeftMotorFollow);
-		Robot.initTalonBrake(BRightMotorFollow);
+		Robot.initTalonCoast(BLeftMotor);
+		Robot.initTalonCoast(FRightMotor);
+		Robot.initTalonCoast(FLeftMotorFollow);
+		Robot.initTalonCoast(BRightMotorFollow);
 		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);//maybe magrelative
 		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.setInverted(true);

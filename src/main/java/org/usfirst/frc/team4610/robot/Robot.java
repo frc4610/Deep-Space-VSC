@@ -291,7 +291,7 @@ public class Robot extends TimedRobot {
 		motor.configNominalOutputReverse(0.0, 0);
 		motor.configPeakOutputForward(1.0, 0);
 		motor.configPeakOutputReverse(-1.0, 0);
-		motor.configClosedloopRamp(0.5, 0);
+		motor.configClosedloopRamp(0.55, 0);
 	}
 	
 	public static void initTalonBrake(TalonSRX motor) {
@@ -312,7 +312,7 @@ public class Robot extends TimedRobot {
 		motor.configNominalOutputReverse(0.0, 0);
 		motor.configPeakOutputForward(1.0, 0);
 		motor.configPeakOutputReverse(-1.0, 0);
-		motor.configClosedloopRamp(0.5, 0);
+		motor.configClosedloopRamp(0.55, 0);
 	}
 	
 	public static void initTalonBrake(VictorSPX motor) {

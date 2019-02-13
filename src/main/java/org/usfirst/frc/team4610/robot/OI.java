@@ -58,6 +58,7 @@ public class OI {
 	public Button buttonO8 = new JoystickButton(OP_JOY, 8);
 	public Button buttonO9 = new JoystickButton(OP_JOY, 9);
 	public Button buttonO10 = new JoystickButton(OP_JOY, 10);
+	public Button buttonO11 = new JoystickButton(OP_JOY, 11);
 	public Button buttonO12 = new JoystickButton(OP_JOY, 12);
 	//public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	//// CREATING BUTTONS
@@ -95,6 +96,7 @@ public class OI {
 			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
 			buttonR3.whenPressed(new Intake("Cargo"));
 			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
+			
 			//removed functions
 			//buttonR11.whenPressed(new CIntPneums(true));
 			//buttonR12.whenPressed(new CIntPneums(false));
@@ -108,13 +110,12 @@ public class OI {
 		{
 			buttonO3.whenPressed(new BarMoving(-.1)); //bar also should be operator, look at cross' comment
 			buttonO4.whenPressed(new BarMoving(.1)); 
-			buttonO2.whenPressed(new Intake("Hatch"));//may want to combine this with tail up
-			//buttonO6.whileHeld(new IntakeTailUp()); currently in intake already, test further
-			buttonO1.whileHeld(new place("Hatch", false));//whileHeld interrupts once releassed, may want to change function back to original if this is undesired, along with whenPressed
+			buttonO2.whenPressed(new Intake("Hatch"));//combined tail up into this
+			buttonO1.whileHeld(new place("Hatch", false));
 			buttonO5.whenPressed(new CrossIntake());//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
 			buttonO6.whenPressed(new CrossRelease());// a possible to solution to button problem could be a button to switch between tail/cintake control
-			//buttonO9.whenPressed(new GripIntake());// current in place solution would be to set 3 fbar positions and to recompress the crossbow functions.
-			//buttonO8.whenPressed(new GripRelease());
+			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
+			
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.
 			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot));
 			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2));
@@ -122,6 +123,11 @@ public class OI {
 			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3));
 			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4));
 			*/
+
+			//removed functions
+			//buttonO9.whenPressed(new GripIntake());
+			//buttonO8.whenPressed(new GripRelease());
+			//buttonO6.whileHeld(new IntakeTailUp()); currently in intake already, test further
 		}
 		
 	}
