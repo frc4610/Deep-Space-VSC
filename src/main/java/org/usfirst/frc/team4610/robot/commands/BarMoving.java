@@ -43,11 +43,11 @@ private double speed;
     //stops when button is released. change later to set to the limit switches or enc values.
     if(speed < 0)
     {
-      return !Robot.m_oi.buttonL1.get();
+      return !Robot.m_oi.buttonO3.get();
     }
     else if(speed > 0)
     {
-      return !Robot.m_oi.buttonR1.get();
+      return !Robot.m_oi.buttonO4.get();
     }
     else
     {
