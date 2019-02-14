@@ -45,7 +45,14 @@ public class turn extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ((degrees - Robot.gyro.getAngle() <= Robot.acceptedTurnTolerance)&&(degrees - Robot.gyro.getAngle() >= -Robot.acceptedTurnTolerance))||Robot.interrupt;
+		if(degrees > 0)
+		{
+		return ((degrees - Robot.gyro.getAngle() <= Robot.acceptedTurnTolerance)&&(degrees - Robot.gyro.getAngle() >= -Robot.acceptedTurnTolerance))||Robot.interrupt;
+		}
+		else 
+		{
+			return ((-degrees - Robot.gyro.getAngle() <= Robot.acceptedTurnTolerance)&&(-degrees - Robot.gyro.getAngle() >= -Robot.acceptedTurnTolerance))||Robot.interrupt;
+		}
     }
 
     // Called once after isFinished returns true
