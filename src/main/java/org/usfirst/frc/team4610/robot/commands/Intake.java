@@ -87,6 +87,7 @@ public class Intake extends Command {
         else if(object.equals("Hatch"))
         {
           Robot.tail.tailMove(0);
+          fix.start();
         }
   }
 }

@@ -24,12 +24,13 @@ public class IntakeTailUp extends Command {
   @Override
   protected void initialize() {
     Robot.tail.tailMove(-.5);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
+    Robot.interrupt = true;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.interrupt = true;
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

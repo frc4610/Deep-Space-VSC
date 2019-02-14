@@ -260,7 +260,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		//misc values for the drive team to know whats up
-		SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
+		//SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		if(intake.isCargoIn())
 		{
 			SmartDashboard.putString("Intake Status", "Full");
@@ -273,6 +273,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
 		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		SmartDashboard.putNumber("Gyro", gyro.getAngle());
 		Scheduler.getInstance().run();
 	}
 
