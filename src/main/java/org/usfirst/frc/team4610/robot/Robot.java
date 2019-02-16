@@ -104,9 +104,9 @@ public class Robot extends TimedRobot {
 		lidar = new Lidar(new DigitalInput(0));// the number is for the port
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
-		pneum= new Pneum(1,2);//see subsystem for the parameters
-		tail = new Tail(3,7,1);//see subsystem for the parameters
-		cbow = new Crossbow(1,5,2,6);//see subsystem for the parameters
+		pneum= new Pneum(6,7);//see subsystem for the parameters
+		tail = new Tail(4,5,1);//see subsystem for the parameters
+		cbow = new Crossbow(2,3,0,1);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;

@@ -15,30 +15,30 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  */
 public class Crossbow extends Subsystem {
 
-  private DoubleSolenoid gripDS15;
-  private DoubleSolenoid crossDS26;
+  private DoubleSolenoid gripDS23;
+  private DoubleSolenoid crossDS01;
   public Crossbow(int gfirst, int gsecond, int cfirst, int csecond)
   {
-    this.crossDS26 = new DoubleSolenoid(0, cfirst, csecond);
-    this.gripDS15 = new DoubleSolenoid(0, gfirst, gsecond);
+    this.crossDS01 = new DoubleSolenoid(0, cfirst, csecond);
+    this.gripDS23 = new DoubleSolenoid(0, gfirst, gsecond);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public void grip()
   {
-    gripDS15.set(DoubleSolenoid.Value.kForward);
+    gripDS23.set(DoubleSolenoid.Value.kForward);
   }
   public void release()
   {
-    gripDS15.set(DoubleSolenoid.Value.kReverse);
+    gripDS23.set(DoubleSolenoid.Value.kReverse);
   }
   public void crossOut()
   {
-    crossDS26.set(DoubleSolenoid.Value.kForward);
+    crossDS01.set(DoubleSolenoid.Value.kForward);
   }
   public void crossIn()
   {
-    crossDS26.set(DoubleSolenoid.Value.kReverse);
+    crossDS01.set(DoubleSolenoid.Value.kReverse);
   }
   @Override
   public void initDefaultCommand() {

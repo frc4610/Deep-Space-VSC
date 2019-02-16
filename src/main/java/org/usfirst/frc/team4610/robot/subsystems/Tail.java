@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Tail extends Subsystem {
   private TalonSRX tailT;
-  private DoubleSolenoid ejectDS56;
+  private DoubleSolenoid ejectDS45;
   private DigitalInput tailLimit;
   public Tail(int firstE, int secondE,int limitPort)
   {
@@ -31,7 +31,7 @@ public class Tail extends Subsystem {
     Robot.initTalonBrake(tailT);
     tailT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     tailT.setSelectedSensorPosition(0, 0 ,10);
-    this.ejectDS56 = new DoubleSolenoid(0, firstE, secondE);
+    this.ejectDS45 = new DoubleSolenoid(0, firstE, secondE);
     this.tailLimit = new DigitalInput(1);//use testingLimit.get() to find value. Should return true when open, false when pressed
   }
 
@@ -41,11 +41,11 @@ public class Tail extends Subsystem {
   }
   public void eject()
   {
-    ejectDS56.set(DoubleSolenoid.Value.kReverse);
+    ejectDS45.set(DoubleSolenoid.Value.kReverse);
   }
   public void resetEject()
   {
-    ejectDS56.set(DoubleSolenoid.Value.kForward);
+    ejectDS45.set(DoubleSolenoid.Value.kForward);
   }
   public boolean isUp()
   {
