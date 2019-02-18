@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class CrossRelease extends Command {
   private Timer timer;
-  public CrossRelease() {
+  private boolean auto;
+  public CrossRelease(boolean Auto) {
     requires(Robot.cbow);
     this.timer = new Timer();
+    this.auto = Auto;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,7 +25,10 @@ public class CrossRelease extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.interrupt = true;
+    if(!auto)
+    {
+      Robot.interrupt = true;
+    }
     Robot.cbow.release();
     timer.start();
   }

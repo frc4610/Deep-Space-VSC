@@ -112,8 +112,8 @@ public class OI {
 			buttonO4.whileHeld(new BarMoving(.75)); 
 			buttonO2.whileHeld(new Intake("Hatch"));//combined tail up into this
 			buttonO1.whileHeld(new place("Hatch", false));
-			buttonO5.whenPressed(new CrossIntake());//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
-			buttonO6.whenPressed(new CrossRelease());// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonO5.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
+			buttonO6.whenPressed(new CrossRelease(false));// a possible to solution to button problem could be a button to switch between tail/cintake control
 			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
 			
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.

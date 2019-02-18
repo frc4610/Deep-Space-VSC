@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class CrossIntake extends Command {
   private Timer timer;
-  public CrossIntake() {
+  private boolean auto;
+  public CrossIntake(boolean Auto) {
     requires(Robot.cbow);
     this.timer = new Timer();
+    this.auto = Auto;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,7 +25,10 @@ public class CrossIntake extends Command {
   @Override
   protected void initialize() {
     Robot.cbow.crossOut();
-    Robot.interrupt = true;
+    if(!auto)
+    {
+      Robot.interrupt = true;
+    }
     timer.start();
   }
 
