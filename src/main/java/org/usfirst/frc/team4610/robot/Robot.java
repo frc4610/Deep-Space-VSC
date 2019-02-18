@@ -146,8 +146,8 @@ public class Robot extends TimedRobot {
 		tail.resetEject();
 		//intake.cInAdjustR();
 		bar.resetBEnc();
-		cbow.release();
-		cbow.crossIn();
+		cbow.grip();
+		cbow.crossOut();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);

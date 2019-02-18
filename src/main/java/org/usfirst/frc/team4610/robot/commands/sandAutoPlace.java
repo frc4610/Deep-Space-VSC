@@ -21,20 +21,20 @@ public class sandAutoPlace extends CommandGroup {
     //delays at beginning
     addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
     //moves off the HAB, may be 5-8 ft instead, test
-    addSequential(new forward(-Robot.encMultiFt*4/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
+    addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
     //turns towards nearest cargoship hatch panel place
     if(pos.equals("L"))
     {
-      addSequential(new turn(10, Robot.autoSpeed));
+      addSequential(new turn(-10, Robot.autoSpeed));
     }
     else if (pos.equals("R"))
     {
-      addSequential(new turn(-10, Robot.autoSpeed));
+      addSequential(new turn(10, Robot.autoSpeed));
     }
     //moves towards the cargoship
-    addSequential(new forward(-Robot.encMultiFt*10/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
+    addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
     //places the preloaded hatch panel
-    addSequential(new place("Hatch", true));//params in command
+    addSequential(new CrossRelease(true));//params in command
 
     //for future commands, most likely add turns to get to a good angle, drive forward and grab. turn again to re-aim and place again for "d".
     //I have yet to do this as so many placeholders will be there. Test using my list before this gets furthered
