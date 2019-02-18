@@ -24,7 +24,7 @@ public class CrossRelease extends Command {
   @Override
   protected void initialize() {
     Robot.interrupt = true;
-    Robot.cbow.crossIn();
+    Robot.cbow.release();
     timer.start();
   }
 
@@ -36,13 +36,13 @@ public class CrossRelease extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timer.get() >= .5;
+    return timer.get() >= .25;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cbow.release();
+    Robot.cbow.crossIn();
     timer.stop();
     timer.reset();
 

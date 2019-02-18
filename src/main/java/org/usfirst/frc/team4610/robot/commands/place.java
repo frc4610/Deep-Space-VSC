@@ -35,7 +35,7 @@ private Timer timer;
         }
         if(object.equals("Cargo"))
         {
-            Robot.intake.setIntake(-.5);
+            Robot.intake.setIntake(-.9);
         }
         else if(object.equals("Hatch")&&!(auto&&Robot.interrupt))
         {

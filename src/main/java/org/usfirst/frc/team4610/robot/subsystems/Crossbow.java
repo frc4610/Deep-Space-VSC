@@ -26,11 +26,11 @@ public class Crossbow extends Subsystem {
   // here. Call these from Commands.
   public void grip()
   {
-    gripDS23.set(DoubleSolenoid.Value.kForward);
+    gripDS23.set(DoubleSolenoid.Value.kReverse);
   }
   public void release()
   {
-    gripDS23.set(DoubleSolenoid.Value.kReverse);
+    gripDS23.set(DoubleSolenoid.Value.kForward);
   }
   public void crossOut()
   {

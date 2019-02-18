@@ -19,7 +19,7 @@ import org.usfirst.frc.team4610.robot.commands.DrivePneums;
 //import org.usfirst.frc.team4610.robot.commands.GripIntake;
 //import org.usfirst.frc.team4610.robot.commands.GripRelease;
 //import org.usfirst.frc.team4610.robot.commands.CIntPneums;
-//import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
+import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -92,8 +92,8 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear? test
-			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear? test
+			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear
+			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonR3.whileHeld(new Intake("Cargo"));
 			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
 			
@@ -108,8 +108,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO3.whileHeld(new BarMoving(-.1)); //bar also should be operator, look at cross' comment
-			buttonO4.whileHeld(new BarMoving(.1)); 
+			buttonO3.whileHeld(new BarMoving(-.75)); //bar also should be operator, look at cross' comment
+			buttonO4.whileHeld(new BarMoving(.75)); 
 			buttonO2.whileHeld(new Intake("Hatch"));//combined tail up into this
 			buttonO1.whileHeld(new place("Hatch", false));
 			buttonO5.whenPressed(new CrossIntake());//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
@@ -117,12 +117,14 @@ public class OI {
 			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
 			
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.
+			
+			*/
 			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot));
 			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2));
-			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop);
+			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop));
 			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3));
 			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4));
-			*/
+			
 
 			//removed functions
 			//buttonO9.whenPressed(new GripIntake());

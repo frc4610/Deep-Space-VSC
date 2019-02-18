@@ -55,14 +55,14 @@ public class Robot extends TimedRobot {
 	//https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html
 	public static Counter limCounter;
 	//public static DigitalInput testingLimit;
-	public static double encMultiFt = 800;//used to be 435 //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
+	public static double encMultiFt = 400;//used to be 435 //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
 	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
 	public static double encShopExtra = 400; //enc value the robot gains by slide. use acc/decel motor values to nullify
-	public static double fbarPosBot = 0;// enc values for the set four bar positions
-	public static double fbarPos2 = 0;
-	public static double fbarPos3 = 0;
-	public static double fbarPos4 = 0;
-	public static double fbarPosTop = 0;
+	public static double fbarPosBot = 635;// enc values for the set four bar positions
+	public static double fbarPos2 = 2600;
+	public static double fbarPos3 = 3345;
+	public static double fbarPos4 = 3875;
+	public static double fbarPosTop = 5415;
 	public static double autoTimer;//tracks time in ms
 	public static double autoTimeSec;//tracks time in seconds
 	public static double autoSpeed;//default speed for drivebase in auto
@@ -146,6 +146,8 @@ public class Robot extends TimedRobot {
 		tail.resetEject();
 		//intake.cInAdjustR();
 		bar.resetBEnc();
+		cbow.release();
+		cbow.crossIn();
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);

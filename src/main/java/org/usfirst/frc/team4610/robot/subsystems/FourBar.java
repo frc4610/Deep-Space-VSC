@@ -37,14 +37,15 @@ public class FourBar extends Subsystem {
     fbV.configClosedloopRamp(1, 0);
     fbT.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0 , 10);
     fbT.setSelectedSensorPosition(0, 0 ,10);
+    fbT.setSensorPhase(true);
     fbT.setInverted(true);
     fbT.selectProfileSlot(0, 0);//Set it to be the correct values, test
-		fbT.config_kF(0, 0, 10);
-		fbT.config_kP(0, 0, 10);
+		fbT.config_kF(0, 0.15, 10);
+		fbT.config_kP(0, 0.15, 10);
 		fbT.config_kI(0, 0, 10);
     fbT.config_kD(0, 0, 10);
-    fbT.configPeakOutputForward(.3, 0);//prevents the motor from going to fast
-		fbT.configPeakOutputReverse(-.3, 0);
+    fbT.configPeakOutputForward(.5, 0);//prevents the motor from going to fast
+		fbT.configPeakOutputReverse(-.5, 0);
     fbV.follow(fbT);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);

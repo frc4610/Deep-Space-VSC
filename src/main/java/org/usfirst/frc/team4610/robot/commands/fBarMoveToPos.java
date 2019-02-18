@@ -33,7 +33,14 @@ public class fBarMoveToPos extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(pos > sPos)
+    {  
       Robot.bar.setBar(ControlMode.Position, pos);
+    }
+    else
+    {
+      Robot.bar.setBar(ControlMode.Position, pos-sPos);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -23,7 +23,7 @@ public class IntakeTailUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.tail.tailMove(-.5);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
+    Robot.tail.tailMove(-.25);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
     Robot.interrupt = true;
   }
 

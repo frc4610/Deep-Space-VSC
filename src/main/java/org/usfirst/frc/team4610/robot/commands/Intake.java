@@ -31,11 +31,11 @@ public class Intake extends Command {
     Robot.interrupt = true;
     if(object.equals("Cargo"))
         {
-            Robot.intake.setIntake(.5);
+            Robot.intake.setIntake(.9);
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.tailMove(.5);
+            Robot.tail.tailMove(.25);
         }
   }
 
