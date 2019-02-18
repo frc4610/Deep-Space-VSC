@@ -32,10 +32,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	//mapping of joysticks
-	public  Joystick LEFT_JOY = new Joystick(0);
-	public  Joystick RIGHT_JOY = new Joystick(1);
+	public Joystick CON = new Joystick(0);
+	//public  Joystick LEFT_JOY = new Joystick(0);
+	//public  Joystick RIGHT_JOY = new Joystick(1);
 	public  Joystick OP_JOY = new Joystick(2);
-	public Button buttonR1 = new JoystickButton(RIGHT_JOY, 1);
+	/*public Button buttonR1 = new JoystickButton(RIGHT_JOY, 1);
 	public Button buttonR3 = new JoystickButton(RIGHT_JOY, 3);
 	public Button buttonR4 = new JoystickButton(RIGHT_JOY, 4);
 	public Button buttonR5 = new JoystickButton(RIGHT_JOY, 5);
@@ -47,7 +48,11 @@ public class OI {
 	public Button buttonL1 = new JoystickButton(LEFT_JOY, 1);
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
-	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);
+	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);*/
+	public Button buttonC5 = new JoystickButton(CON, 5);
+	public Button buttonC6 = new JoystickButton(CON, 6);
+	public Button buttonC7 = new JoystickButton(CON, 7);
+	public Button buttonC8 = new JoystickButton(CON, 8);
 	public Button buttonO1 = new JoystickButton(OP_JOY, 1);
 	public Button buttonO2 = new JoystickButton(OP_JOY, 2);
 	public Button buttonO3 = new JoystickButton(OP_JOY, 3);
@@ -92,11 +97,14 @@ public class OI {
 		//different diver control schemes
 		if(driver.equals("W"))
 		{
-			buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear
+			/*buttonL3.whenPressed(new DrivePneums(1)); // 1 is high gear
 			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonR3.whileHeld(new Intake("Cargo"));
-			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed
-			
+			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed*/
+			buttonC5.whenPressed(new DrivePneums(1));
+			buttonC6.whenPressed(new DrivePneums(0)); // 0 is low gear
+			buttonC7.whileHeld(new Intake("Cargo"));
+			buttonC8.whileHeld(new place("Cargo", false));
 			//removed functions
 			//buttonR11.whenPressed(new CIntPneums(true));
 			//buttonR12.whenPressed(new CIntPneums(false));
@@ -108,8 +116,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO3.whileHeld(new BarMoving(-.75)); //bar also should be operator, look at cross' comment
-			buttonO4.whileHeld(new BarMoving(.75)); 
+			/*buttonO3.whileHeld(new BarMoving(-.75)); //bar also should be operator, look at cross' comment
+			buttonO4.whileHeld(new BarMoving(.75)); */
 			buttonO2.whileHeld(new Intake("Hatch"));//combined tail up into this
 			buttonO1.whileHeld(new place("Hatch", false));
 			buttonO5.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
@@ -119,11 +127,11 @@ public class OI {
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.
 			
 			*/
-			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot));
-			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2));
-			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop));
-			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3));
-			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4));
+			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
+			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
+			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
+			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
+			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
 			
 
 			//removed functions

@@ -27,13 +27,14 @@ public class forward extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveBase.resetEnc(2);
+		Robot.driveBase.resetEnc(2);
+		Robot.driveBase.set(ControlMode.Position, encValue, encValue);
     	//stop extraneous moving parts
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveBase.set(ControlMode.Position, encValue, encValue);
+    	
     	//move at a speed after testing. may need to be a variable
     }
 

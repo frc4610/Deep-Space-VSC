@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
@@ -28,6 +30,8 @@ import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -55,7 +59,7 @@ public class Robot extends TimedRobot {
 	//https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html
 	public static Counter limCounter;
 	//public static DigitalInput testingLimit;
-	public static double encMultiFt = 425;//used to be 435 //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
+	public static double encMultiFt = 400;//used to be 435 //Measure the distance the robot goes and its associated encoder value. Multiple feet wanted by this to get encoder value needed
 	public static double encMultiIn = 36.25;//Enc value for inches. See above for how to use
 	public static double encShopExtra = 400; //enc value the robot gains by slide. use acc/decel motor values to nullify
 	public static double fbarPosBot = 635;// enc values for the set four bar positions
@@ -89,6 +93,10 @@ public class Robot extends TimedRobot {
 	SendableChooser<String> goal;
 	Command autonomousCommand;
 	Command tele;
+	Command fbarJoy;
+	Command fbarFix;
+	double curveX;
+	double curveA = .6;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
@@ -114,6 +122,7 @@ public class Robot extends TimedRobot {
 		intake = new CIntake(2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
+		fbarFix = new fBarMoveToPos(300,true);
 		position = new SendableChooser<>();
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -122,6 +131,7 @@ public class Robot extends TimedRobot {
 		front = 0;
 		interrupt = false;
 		gyro = new AHRS(SPI.Port.kMXP);
+		SmartDashboard.putNumber("Delay", 0);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
 		position.setDefaultOption("Middle", "m");
 		position.addOption("Right2", "R");
@@ -134,10 +144,6 @@ public class Robot extends TimedRobot {
 		//goal.addOption("Double Hatch", "d"); //commented until further testing, don't want to rush too far ahead
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
-		SmartDashboard.putData("Position", position);
-		SmartDashboard.putData("Goal", goal);
-		SmartDashboard.putData("Driver", driver);
-		SmartDashboard.putData("Operator", operator);
 		//.getSelected to get value for smart dash board values
 		m_oi = new OI(driver.getSelected(), operator.getSelected()); 
 		prefs = Preferences.getInstance();
@@ -148,6 +154,11 @@ public class Robot extends TimedRobot {
 		bar.resetBEnc();
 		cbow.grip();
 		cbow.crossOut();
+		//fbarFix.start();
+		SmartDashboard.putData("Position", position);
+		SmartDashboard.putData("Goal", goal);
+		SmartDashboard.putData("Driver", driver);
+		SmartDashboard.putData("Operator", operator);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -181,7 +192,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		SmartDashboard.putData("Position", position);
+		SmartDashboard.putData("Goal", goal);
+		SmartDashboard.putData("Driver", driver);
+		SmartDashboard.putData("Operator", operator);
 		driveBase.resetEnc(2);
+		gyro.reset();
 		//autonomousCommand = m_chooser.getSelected();
 		//new tankDrive();?
 		/*
@@ -200,6 +216,7 @@ public class Robot extends TimedRobot {
 		else if(goal.getSelected().equals("n"))
 		{
 			interrupt = true;
+			autonomousCommand = new fBarMoveToPos(300, true);
 		}
 		else if (position.getSelected().equals("m")||goal.getSelected().equals("f"))
 		{
@@ -239,18 +256,23 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
 		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		SmartDashboard.putNumber("Gyro", gyro.getAngle());
+		SmartDashboard.updateValues();
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
-		driveBase.resetEnc(2);
+		SmartDashboard.putData("Position", position);
+		SmartDashboard.putData("Goal", goal);
+		SmartDashboard.putData("Driver", driver);
+		SmartDashboard.putData("Operator", operator);
 		tele.start();//starts teleop
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		
+		gyro.reset();
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -261,6 +283,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		curveX = -m_oi.CON.getRawAxis(1);
+		bar.setBar(ControlMode.PercentOutput, ((curveA*curveX*curveX) + ((1-curveA)*curveX)));//a potential curve for sensitivy is axxx + (1-a)x, where x is the value and a is a number from 0 - 1 prolly .6. a = 0, its a straight line
 		//misc values for the drive team to know whats up
 		//SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		if(intake.isCargoIn())
@@ -331,15 +355,6 @@ public class Robot extends TimedRobot {
 	public static void checkTeleop()
 	{
 		//if anything is pressed, stop auto. Seems to be broken. oops
-		if(m_oi.buttonR3.get() || m_oi.buttonR4.get() || m_oi.LEFT_JOY.getRawAxis(1) >= 0 + acceptedJoyTolerance|| 
-		   m_oi.LEFT_JOY.getRawAxis(1)  <= 0-acceptedJoyTolerance ||  m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0 ||  
-		   m_oi.RIGHT_JOY.getRawAxis(1) - acceptedJoyTolerance >= 0)
-		{
-			interrupt = true;
-		}
-		else
-		{
-			interrupt = false;
-		}
+	
 	}
 }

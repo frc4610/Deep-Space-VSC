@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team4610.robot.Robot;
 import org.usfirst.frc.team4610.robot.commands.forward;
 import org.usfirst.frc.team4610.robot.commands.Delay;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
@@ -13,9 +14,9 @@ public class sandAutoBasic extends CommandGroup {
     public sandAutoBasic() {
         requires(Robot.driveBase);
         //dealys at beginning
-    	addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch
+    	addSequential(new Delay(SmartDashboard.getNumber("Delay", 0)));//simply moves forward then places a hatch
         //simply leaves the HAB, may need to be 5-8, test
-        addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));
+        addSequential(new forward(Robot.encMultiFt*8/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));
     	//addSequential(new place(/*hatch*/));
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -53,7 +53,7 @@ public class Intake extends Command {
     }
     else if(object.equals("Cargo"))
     {
-      return !Robot.m_oi.buttonR3.get();//||Robot.intake.isCargoIn();
+      return !Robot.m_oi.buttonC7/*R3*/.get();//||Robot.intake.isCargoIn();
     }
     else
     {

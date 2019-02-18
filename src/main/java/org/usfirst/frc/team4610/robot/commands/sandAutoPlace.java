@@ -10,6 +10,7 @@ package org.usfirst.frc.team4610.robot.commands;
 import org.usfirst.frc.team4610.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class sandAutoPlace extends CommandGroup {
   /**
@@ -17,22 +18,22 @@ public class sandAutoPlace extends CommandGroup {
    */
   public sandAutoPlace(String pos) {
     requires(Robot.driveBase);
-    requires(Robot.tail);//may change to to the intake's hatch thing. still uncertain
+    requires(Robot.cbow);//may change to to the intake's hatch thing. still uncertain
     //delays at beginning
-    addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
+    //addSequential(new Delay(SmartDashboard.getNumber("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
     //moves off the HAB, may be 5-8 ft instead, test
-    addSequential(new forward(Robot.encMultiFt*4/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
+    addSequential(new forward(Robot.encMultiFt*15/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
     //turns towards nearest cargoship hatch panel place
     if(pos.equals("L"))
     {
-      addSequential(new turn(-10, Robot.autoSpeed));
+      addSequential(new turn(-45, Robot.autoSpeed));
     }
     else if (pos.equals("R"))
     {
       addSequential(new turn(10, Robot.autoSpeed));
     }
     //moves towards the cargoship
-    addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
+    //addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
     //places the preloaded hatch panel
     addSequential(new CrossRelease(true));//params in command
 

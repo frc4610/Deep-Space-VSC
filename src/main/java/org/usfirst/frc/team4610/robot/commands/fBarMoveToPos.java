@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class fBarMoveToPos extends Command {
   private double pos;
   private double sPos;
-  public fBarMoveToPos(double Pos) {
+  private boolean startUp;
+  public fBarMoveToPos(double Pos,boolean start) {
     requires(Robot.bar);
     this.pos = Pos;
+    this.startUp = start;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,7 +28,10 @@ public class fBarMoveToPos extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.interrupt = true;
+    if(!startUp)
+    {
+      Robot.interrupt = true;
+    }
     this.sPos = Robot.bar.getEncValue();
   }
 
@@ -66,6 +71,10 @@ public class fBarMoveToPos extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    if(startUp)
+    {
+      Robot.bar.resetBEnc();
+    }
     Robot.bar.setBar(ControlMode.PercentOutput, 0);
   }
 }
