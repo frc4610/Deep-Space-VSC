@@ -192,6 +192,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
 		SmartDashboard.putData("Driver", driver);
@@ -263,6 +264,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
 		SmartDashboard.putData("Driver", driver);
