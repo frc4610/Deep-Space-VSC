@@ -32,8 +32,10 @@ public class DriveBase extends Subsystem {
 		Robot.initTalonCoast(BRightMotorFollow);
 		FRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);//maybe magrelative
 		FRightMotor.setSelectedSensorPosition(0, 0 ,10);
+		FRightMotor.setSensorPhase(true);
 		FRightMotor.setInverted(true);
 		BLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		BLeftMotor.setSensorPhase(true);
 		BLeftMotor.setSelectedSensorPosition(0, 0 ,10);
 		FRightMotor.selectProfileSlot(0, 0);//look at section 10 on https://content.vexrobotics.com/vexpro/pdf/SoftwareReferenceManual20180113.pdf
 		FRightMotor.config_kF(0, .2, 10);//10ms timeout prolly gonna be .2 to .3
