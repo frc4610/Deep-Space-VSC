@@ -41,7 +41,7 @@ public class Delay extends Command {
     // Called once after isFinished returns true
     protected void end() {
         timer.stop();
-        //timer.reset();
+        timer.reset();
     	Robot.driveBase.resetEnc(2);
     	Robot.driveBase.set(ControlMode.PercentOutput, 0, 0);
     }
@@ -50,7 +50,7 @@ public class Delay extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
         timer.stop();
-        //timer.reset();
+        timer.reset();
     	Robot.driveBase.resetEnc(2);
     	Robot.driveBase.set(ControlMode.PercentOutput, 0, 0);
     }
