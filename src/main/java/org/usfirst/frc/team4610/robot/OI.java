@@ -10,6 +10,7 @@ package org.usfirst.frc.team4610.robot;
 
 
 import org.usfirst.frc.team4610.robot.commands.BarMoving;
+import org.usfirst.frc.team4610.robot.commands.CIntPneums;
 import org.usfirst.frc.team4610.robot.commands.Intake;
 //import org.usfirst.frc.team4610.robot.commands.IntakeTailUp;
 import org.usfirst.frc.team4610.robot.commands.place;
@@ -116,8 +117,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			/*buttonO3.whileHeld(new BarMoving(-.75)); //bar also should be operator, look at cross' comment
-			buttonO4.whileHeld(new BarMoving(.75)); */
+			buttonO3.whileHeld(new BarMoving(-.85)); //bar also should be operator, look at cross' comment
+			buttonO4.whileHeld(new BarMoving(.85)); 
 			buttonO2.whileHeld(new Intake("Hatch"));//combined tail up into this
 			buttonO1.whileHeld(new place("Hatch", false));
 			buttonO5.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
@@ -129,9 +130,10 @@ public class OI {
 			*/
 			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
 			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
-			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
-			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
-			buttonO12.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
+			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
+			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
+			buttonO11.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
+			buttonO12.whileHeld(new CIntPneums(true));
 			
 
 			//removed functions

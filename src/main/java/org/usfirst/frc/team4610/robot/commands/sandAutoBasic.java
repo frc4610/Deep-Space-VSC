@@ -14,7 +14,7 @@ public class sandAutoBasic extends CommandGroup {
     public sandAutoBasic() {
         requires(Robot.driveBase);
         //dealys at beginning
-    	addSequential(new Delay(SmartDashboard.getNumber("Delay", 0)));//simply moves forward then places a hatch
+    	//addSequential(new Delay(SmartDashboard.getNumber("Delay", 0)));//simply moves forward then places a hatch
         //simply leaves the HAB, may need to be 5-8, test
         addSequential(new forward(Robot.encMultiFt*8/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));
     	//addSequential(new place(/*hatch*/));

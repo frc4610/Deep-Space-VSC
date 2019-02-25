@@ -14,7 +14,7 @@ import org.usfirst.frc.team4610.robot.Robot;
 public class Intake extends Command {
 
   private String object;
-  IntakeTailUp fix = new IntakeTailUp();
+  IntakeTailUp fix = new IntakeTailUp(false);
 
   public Intake(String Object) {
     //Intakes a hatch or Cargo
@@ -31,11 +31,12 @@ public class Intake extends Command {
     Robot.interrupt = true;
     if(object.equals("Cargo"))
         {
+            Robot.intake.cinOut();
             Robot.intake.setIntake(.9);
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.tailMove(.25);
+            Robot.tail.tailMove(.40);
         }
   }
 
@@ -67,7 +68,8 @@ public class Intake extends Command {
   protected void end() {
     if(object.equals("Cargo"))
         {
-            Robot.intake.setIntake(0);
+            Robot.intake.cinIn();
+            Robot.intake.setIntake(0.1);
         }
         else if(object.equals("Hatch"))
         {
@@ -82,7 +84,8 @@ public class Intake extends Command {
   protected void interrupted() {
     if(object.equals("Cargo"))
         {
-            Robot.intake.setIntake(0);
+            Robot.intake.setIntake(0.1);
+            Robot.intake.cinIn();
         }
         else if(object.equals("Hatch"))
         {

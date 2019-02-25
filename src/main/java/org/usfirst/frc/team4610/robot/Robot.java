@@ -65,8 +65,8 @@ public class Robot extends TimedRobot {
 	public static double fbarPosBot = 635;// enc values for the set four bar positions
 	public static double fbarPos2 = 2600;
 	public static double fbarPos3 = 3345;
-	public static double fbarPos4 = 3875;
-	public static double fbarPosTop = 5415;
+	public static double fbarPos4 = 5415;
+	public static double fbarPosTop = 6170;
 	public static double autoTimer;//tracks time in ms
 	public static double autoTimeSec;//tracks time in seconds
 	public static double autoSpeed;//default speed for drivebase in auto
@@ -95,8 +95,10 @@ public class Robot extends TimedRobot {
 	Command tele;
 	Command fbarJoy;
 	Command fbarFix;
-	double curveX;
-	double curveA = .6;
+	public static double curveX;
+	public static double curveY;
+	public static double curveA = .6;
+	boolean holder = false;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
@@ -105,6 +107,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		holder = false;
 		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
 		//testServo.setSpeed(1);//forward, check both functions
 		//testServo.setSpeed(0);//reverse, check both functions
@@ -154,7 +157,8 @@ public class Robot extends TimedRobot {
 		bar.resetBEnc();
 		cbow.grip();
 		cbow.crossOut();
-		//fbarFix.start();
+		intake.cinIn();
+		fbarFix.start();
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
 		SmartDashboard.putData("Driver", driver);
@@ -192,6 +196,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		holder = false;
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
@@ -247,10 +252,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(interrupt)
+		if(interrupt&&!holder)
 		{
+			holder = true;
 			tele.start();//once interrupted starts teleop. All auto functons should automatically stop as well
 		}
+		curveX = -m_oi.CON.getRawAxis(1);
+		curveY = -m_oi.CON.getRawAxis(3);
 		autoTimer += 20; //Divide by 1000 for time in seconds, auto periodic is called every 20 ms, crude but works
 		autoTimeSec = autoTimer / 1000;
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
@@ -286,7 +294,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		curveX = -m_oi.CON.getRawAxis(1);
-		bar.setBar(ControlMode.PercentOutput, ((curveA*curveX*curveX) + ((1-curveA)*curveX)));//a potential curve for sensitivy is axxx + (1-a)x, where x is the value and a is a number from 0 - 1 prolly .6. a = 0, its a straight line
+		curveY = -m_oi.CON.getRawAxis(3);
+		//bar.setBar(ControlMode.PercentOutput, m_oi.OP_JOY.getRawAxis(1));//a potential curve for sensitivy is axxx + (1-a)x, where x is the value and a is a number from 0 - 1 prolly .6. a = 0, its a straight line
 		//misc values for the drive team to know whats up
 		//SmartDashboard.putNumber("LIDAR Inches", lidar.getDistanceIn(false));//the boolean is for whether its rounded or not
 		if(intake.isCargoIn())

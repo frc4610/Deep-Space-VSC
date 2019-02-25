@@ -22,11 +22,11 @@ public class sandAutoPlace extends CommandGroup {
     //delays at beginning
     //addSequential(new Delay(SmartDashboard.getNumber("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
     //moves off the HAB, may be 5-8 ft instead, test
-    addSequential(new forward(Robot.encMultiFt*15/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
+    addSequential(new forward(Robot.encMultiFt*10/*number of move, multi by the enc multi value, Robot.autoSpeed/*speed left then right, Robot.autoSpeed*/));// enc values must be needed distance. test extensivly
     //turns towards nearest cargoship hatch panel place
     if(pos.equals("L"))
     {
-      addSequential(new turn(-45, Robot.autoSpeed));
+      addSequential(new turn(-10, Robot.autoSpeed));
     }
     else if (pos.equals("R"))
     {

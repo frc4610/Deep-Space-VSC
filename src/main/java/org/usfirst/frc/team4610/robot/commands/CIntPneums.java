@@ -26,11 +26,11 @@ public class CIntPneums extends Command {
     Robot.interrupt = true;//make sure this is still right
     if(out)
     {
-      //Robot.intake.cInAdjustF();
+      Robot.intake.cinOut();
     }
     else
     {
-      //Robot.intake.cInAdjustR();
+      Robot.intake.cinIn();
     }
   }
 
@@ -42,17 +42,19 @@ public class CIntPneums extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.intake.cinIn();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.intake.cinIn();
   }
 }

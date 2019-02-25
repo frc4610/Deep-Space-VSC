@@ -12,10 +12,11 @@ import org.usfirst.frc.team4610.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeTailUp extends Command {
+  private boolean auto;
 
-
-  public IntakeTailUp() {
+  public IntakeTailUp(boolean Auto) {
     requires(Robot.tail);
+    this.auto = Auto;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,8 +24,14 @@ public class IntakeTailUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.tail.tailMove(-.25);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
-    Robot.interrupt = true;
+    if(Robot.tail.getEncValue() >0)
+    {
+      Robot.tail.tailMove(-.40);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
+    }
+    if(!auto)
+    {
+      Robot.interrupt = true;
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
