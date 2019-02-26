@@ -29,7 +29,7 @@ public class CrossRelease extends Command {
     {
       Robot.interrupt = true;
     }
-    Robot.cbow.release();
+    Robot.cbow.crossOut();
     timer.start();
   }
 
@@ -47,7 +47,7 @@ public class CrossRelease extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.cbow.crossIn();
+    Robot.cbow.release();
     timer.stop();
     timer.reset();
 

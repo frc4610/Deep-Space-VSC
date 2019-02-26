@@ -17,6 +17,7 @@ import org.usfirst.frc.team4610.robot.commands.place;
 import org.usfirst.frc.team4610.robot.commands.CrossIntake;
 import org.usfirst.frc.team4610.robot.commands.CrossRelease;
 import org.usfirst.frc.team4610.robot.commands.DrivePneums;
+import org.usfirst.frc.team4610.robot.commands.GripRelease;
 //import org.usfirst.frc.team4610.robot.commands.GripIntake;
 //import org.usfirst.frc.team4610.robot.commands.GripRelease;
 //import org.usfirst.frc.team4610.robot.commands.CIntPneums;
@@ -117,23 +118,25 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO3.whileHeld(new BarMoving(-.85)); //bar also should be operator, look at cross' comment
-			buttonO4.whileHeld(new BarMoving(.85)); 
-			buttonO2.whileHeld(new Intake("Hatch"));//combined tail up into this
-			buttonO1.whileHeld(new place("Hatch", false));
-			buttonO5.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
-			buttonO6.whenPressed(new CrossRelease(false));// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonO7.whileHeld(new BarMoving(-.85)); //bar also should be operator, look at cross' comment
+			buttonO8.whileHeld(new BarMoving(.85)); 
+			buttonO3.whileHeld(new Intake("Hatch"));//combined tail up into this
+			buttonO4.whileHeld(new place("Hatch", false));
+			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
+			buttonO5.whenPressed(new CrossRelease(false));// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonO6.whenReleased(new GripRelease());
+			buttonO5.whenReleased(new GripRelease());
 			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
 			
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.
 			
 			*/
-			buttonO7.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
-			buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
-			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
-			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
-			buttonO11.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
-			buttonO12.whileHeld(new CIntPneums(true));
+			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
+			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
+			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
+			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
+			buttonO1.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
+			buttonO2.whileHeld(new CIntPneums(true));
 			
 
 			//removed functions

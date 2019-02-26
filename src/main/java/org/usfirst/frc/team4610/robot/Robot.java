@@ -31,7 +31,6 @@ import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
