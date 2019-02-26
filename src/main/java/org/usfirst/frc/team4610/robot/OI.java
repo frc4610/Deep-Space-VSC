@@ -103,10 +103,10 @@ public class OI {
 			buttonL4.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonR3.whileHeld(new Intake("Cargo"));
 			buttonR4.whileHeld(new place("Cargo", false)); //whileHeld interrupts once released, may want to change function back to original if this is undesired, along with whenPressed*/
-			buttonC5.whenPressed(new DrivePneums(1));
-			buttonC6.whenPressed(new DrivePneums(0)); // 0 is low gear
-			buttonC7.whileHeld(new Intake("Cargo"));
-			buttonC8.whileHeld(new place("Cargo", false));
+			buttonC6.whenPressed(new DrivePneums(1));
+			buttonC5.whenPressed(new DrivePneums(0)); // 0 is low gear
+			buttonC8.whileHeld(new Intake("Cargo"));
+			buttonC7.whileHeld(new place("Cargo", false));
 			//removed functions
 			//buttonR11.whenPressed(new CIntPneums(true));
 			//buttonR12.whenPressed(new CIntPneums(false));
