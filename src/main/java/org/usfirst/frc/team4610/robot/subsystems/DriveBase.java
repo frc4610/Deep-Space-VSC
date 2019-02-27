@@ -69,6 +69,24 @@ public class DriveBase extends Subsystem {
 		}
 
 	}
+	public void limitSpeed(boolean fast)
+	{
+		if(!fast)
+		{
+			FRightMotor.configPeakOutputForward(.85, 0);
+			FRightMotor.configPeakOutputReverse(-.85,0);
+			BLeftMotor.configPeakOutputForward(.85, 0);
+			BLeftMotor.configPeakOutputReverse(-.85,0);
+		}
+		else
+		{
+			FRightMotor.configPeakOutputForward(1, 0);
+			FRightMotor.configPeakOutputReverse(-1,0);
+			BLeftMotor.configPeakOutputForward(1, 0);
+			BLeftMotor.configPeakOutputReverse(-1,0);
+		}
+
+	}
 	
 	public double getEncValue(boolean motor)//if motor is true, find right motor, false gets left. Returns encoder value
 	{

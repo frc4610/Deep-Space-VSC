@@ -6,17 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team4610.robot.commands;
-
 import org.usfirst.frc.team4610.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class IntakeTailUp extends Command {
-  private boolean auto;
-
-  public IntakeTailUp(boolean Auto) {
-    requires(Robot.tail);
-    this.auto = Auto;
+public class DriveSpeeds extends Command {
+  private boolean fast;
+  public DriveSpeeds(boolean Fast) {
+    this.fast = Fast;
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -24,38 +20,28 @@ public class IntakeTailUp extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(Robot.tail.getEncValue() >0)
-    {
-      Robot.tail.tailMove(-.40);//if this proves to be problematic, switch to position control mode. is currently at this because it really isnt too terrible important to be precise
-    }
-    if(!auto)
-    {
-      Robot.interrupt = true;
-    }
+      Robot.driveBase.limitSpeed(fast);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return  Robot.tail.getEncValue() <= 0;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.tail.tailMove(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.tail.tailMove(0);
   }
 }

@@ -158,6 +158,7 @@ public class Robot extends TimedRobot {
 		cbow.crossOut();
 		intake.cinIn();
 		fbarFix.start();
+		driveBase.limitSpeed(false);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
 		SmartDashboard.putData("Driver", driver);

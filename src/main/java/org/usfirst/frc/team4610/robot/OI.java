@@ -17,6 +17,8 @@ import org.usfirst.frc.team4610.robot.commands.place;
 import org.usfirst.frc.team4610.robot.commands.CrossIntake;
 import org.usfirst.frc.team4610.robot.commands.CrossRelease;
 import org.usfirst.frc.team4610.robot.commands.DrivePneums;
+import org.usfirst.frc.team4610.robot.commands.DriveSpeeds;
+import org.usfirst.frc.team4610.robot.commands.GripIntake;
 import org.usfirst.frc.team4610.robot.commands.GripRelease;
 //import org.usfirst.frc.team4610.robot.commands.GripIntake;
 //import org.usfirst.frc.team4610.robot.commands.GripRelease;
@@ -55,6 +57,8 @@ public class OI {
 	public Button buttonC6 = new JoystickButton(CON, 6);
 	public Button buttonC7 = new JoystickButton(CON, 7);
 	public Button buttonC8 = new JoystickButton(CON, 8);
+	public Button buttonC9 = new JoystickButton(CON, 9);
+	public Button buttonC10 = new JoystickButton(CON, 10);
 	public Button buttonO1 = new JoystickButton(OP_JOY, 1);
 	public Button buttonO2 = new JoystickButton(OP_JOY, 2);
 	public Button buttonO3 = new JoystickButton(OP_JOY, 3);
@@ -107,6 +111,8 @@ public class OI {
 			buttonC5.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonC8.whileHeld(new Intake("Cargo"));
 			buttonC7.whileHeld(new place("Cargo", false));
+			buttonC9.whenPressed(new DriveSpeeds(false));
+			buttonC10.whenPressed(new DriveSpeeds(true));
 			//removed functions
 			//buttonR11.whenPressed(new CIntPneums(true));
 			//buttonR12.whenPressed(new CIntPneums(false));
@@ -118,14 +124,14 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO7.whileHeld(new BarMoving(-.85)); //bar also should be operator, look at cross' comment
-			buttonO8.whileHeld(new BarMoving(.85)); 
+			buttonO7.whileHeld(new BarMoving(-1)); //bar also should be operator, look at cross' comment
+			buttonO8.whileHeld(new BarMoving(1)); 
 			buttonO3.whileHeld(new Intake("Hatch"));//combined tail up into this
 			buttonO4.whileHeld(new place("Hatch", false));
 			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
-			buttonO5.whenPressed(new CrossRelease(false));// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonO5.whenPressed(new GripIntake());// a possible to solution to button problem could be a button to switch between tail/cintake control
 			buttonO6.whenReleased(new GripRelease());
-			buttonO5.whenReleased(new GripRelease());
+			buttonO5.whenReleased(new CrossRelease(false));
 			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
 			
 			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.

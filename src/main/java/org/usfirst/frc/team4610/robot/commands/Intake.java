@@ -50,11 +50,11 @@ public class Intake extends Command {
   protected boolean isFinished() {
     if(object.equals("Hatch"))
     {
-      return !Robot.m_oi.buttonO2.get();
+      return !Robot.m_oi.buttonO3.get();
     }
     else if(object.equals("Cargo"))
     {
-      return !Robot.m_oi.buttonC7/*R3*/.get();//||Robot.intake.isCargoIn();
+      return !Robot.m_oi.buttonC8/*R3*/.get();//||Robot.intake.isCargoIn();
     }
     else
     {
