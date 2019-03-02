@@ -31,6 +31,7 @@ public class Delay extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.driveBase.set(ControlMode.PercentOutput, 0, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,8 +43,6 @@ public class Delay extends Command {
     protected void end() {
         timer.stop();
         timer.reset();
-    	Robot.driveBase.resetEnc(2);
-    	Robot.driveBase.set(ControlMode.PercentOutput, 0, 0);
     }
 
     // Called when another command which requires one or more of the same
@@ -51,7 +50,5 @@ public class Delay extends Command {
     protected void interrupted() {
         timer.stop();
         timer.reset();
-    	Robot.driveBase.resetEnc(2);
-    	Robot.driveBase.set(ControlMode.PercentOutput, 0, 0);
     }
 }

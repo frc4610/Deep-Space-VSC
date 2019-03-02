@@ -43,11 +43,11 @@ private double speed;
     //stops when button is released. change later to set to the limit switches or enc values.
     if(speed < 0)
     {
-      return !Robot.m_oi.buttonO7.get();//||Robot.bar.getEncValue() <= Robot.fbarPosBot;
+      return !Robot.m_oi.buttonO7.get()||Robot.bar.getEncValue() <= 0;
     }
     else if(speed > 0)
     {
-      return !Robot.m_oi.buttonO8.get();//||Robot.bar.getEncValue() >= 300;
+      return !Robot.m_oi.buttonO8.get()||Robot.bar.getEncValue() >= 6600;
     }
     else
     {

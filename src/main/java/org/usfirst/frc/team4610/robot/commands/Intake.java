@@ -20,7 +20,7 @@ public class Intake extends Command {
     //Intakes a hatch or Cargo
     this.object = Object;
     requires(Robot.intake);
-    requires(Robot.tail);
+    //requires(Robot.tail);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -36,7 +36,7 @@ public class Intake extends Command {
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.tailMove(.40);
+            //Robot.tail.tailMove(.40);
         }
   }
 
@@ -73,7 +73,7 @@ public class Intake extends Command {
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.tailMove(0);//add new command to re put tail up
+            //Robot.tail.tailMove(0);//add new command to re put tail up
             fix.start();
         }
   }
@@ -89,7 +89,7 @@ public class Intake extends Command {
         }
         else if(object.equals("Hatch"))
         {
-          Robot.tail.tailMove(0);
+          //Robot.tail.tailMove(0);
           fix.start();
         }
   }

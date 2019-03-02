@@ -126,8 +126,8 @@ public class OI {
 		{
 			buttonO7.whileHeld(new BarMoving(-1)); //bar also should be operator, look at cross' comment
 			buttonO8.whileHeld(new BarMoving(1)); 
-			buttonO3.whileHeld(new Intake("Hatch"));//combined tail up into this
-			buttonO4.whileHeld(new place("Hatch", false));
+			//buttonO3.whileHeld(new Intake("Hatch"));//combined tail up into this
+			//buttonO4.whileHeld(new place("Hatch", false));
 			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
 			buttonO5.whenPressed(new GripIntake());// a possible to solution to button problem could be a button to switch between tail/cintake control
 			buttonO6.whenReleased(new GripRelease());

@@ -20,7 +20,7 @@ private Timer timer;
         this.auto = Auto;
         this.timer = new Timer();
         requires(Robot.intake);
-        requires(Robot.tail);
+        //requires(Robot.tail);
 
     	//This always requires both systems, since if both were to be controlled we'd have to be manipulting two game pieces. May want to change later
         // Use requires() here to declare subsystem dependencies
@@ -39,7 +39,7 @@ private Timer timer;
         }
         else if(object.equals("Hatch")&&!(auto&&Robot.interrupt))
         {
-            Robot.tail.eject();
+            //Robot.tail.eject();
         }
         timer.start();
         
@@ -65,7 +65,7 @@ private Timer timer;
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.resetEject();
+            //Robot.tail.resetEject();
         }
         timer.stop();
         timer.reset();
@@ -81,7 +81,7 @@ private Timer timer;
         }
         else if(object.equals("Hatch"))
         {
-            Robot.tail.resetEject();
+            //Robot.tail.resetEject();
         }
         timer.stop();
         timer.reset();

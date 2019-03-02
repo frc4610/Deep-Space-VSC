@@ -15,7 +15,7 @@ public class sandAutoDouble extends CommandGroup {
    */
   public sandAutoDouble(String pos) {
     requires(Robot.driveBase);
-    requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
+    //requires(Robot.tail);//may change to tohe intake' hatch thing. still uncertain
     //delay at beginning
     addSequential(new Delay(Robot.prefs.getDouble("Delay", 0)));//simply moves forward then places a hatch. Still need to meausre drop off values
     //moves off of HAB, may need to be somewhere between 5-8 ft instead, test

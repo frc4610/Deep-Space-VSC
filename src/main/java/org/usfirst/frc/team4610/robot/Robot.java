@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 	public static Lidar lidar;
 	//public static PIDtester testTail;
 	public static AHRS gyro;
-	public static Tail tail;
+	//public static Tail tail;
 	public static Crossbow cbow;
 	public static FourBar bar;//Later, test with pidtesting after this subsystem works
 	public static CIntake intake;
@@ -107,6 +107,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		holder = false;
+		driver = new SendableChooser<>();
+		operator = new SendableChooser<>();
 		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
 		//testServo.setSpeed(1);//forward, check both functions
 		//testServo.setSpeed(0);//reverse, check both functions
@@ -115,7 +117,7 @@ public class Robot extends TimedRobot {
 		//limCounter = new Counter(testingLimit);//use to find if value switched to quick, i.e. limCounter.get() > 0 means it was pressed. use limCounter.reset(); to set to 0
 		driveBase = new DriveBase();
 		pneum= new Pneum(6,7);//see subsystem for the parameters
-		tail = new Tail(4,5,1);//see subsystem for the parameters
+		//tail = new Tail(4,5,1);//see subsystem for the parameters
 		cbow = new Crossbow(2,3,0,1);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
@@ -124,45 +126,27 @@ public class Robot extends TimedRobot {
 		intake = new CIntake(2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
-		fbarFix = new fBarMoveToPos(300,true);
-		position = new SendableChooser<>();
-		driver = new SendableChooser<>();
-		operator = new SendableChooser<>();
-		goal = new SendableChooser<>();
 		autoSpeed = .5;
+		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
+		operator.setDefaultOption("Nathan", "N");//same as above
+		SmartDashboard.putData("Driver", driver);
+		SmartDashboard.putData("Operator", operator);
 		front = 0;
 		interrupt = false;
 		gyro = new AHRS(SPI.Port.kMXP);
-		SmartDashboard.putNumber("Delay", 0);
-		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
-		position.setDefaultOption("Middle", "m");
-		position.addOption("Right2", "R");
-		position.addOption("Left", "l");//should never be the case, but may be needed
-		position.addOption("Right", "r");
-		goal.addOption("No auto", "n");
-		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
-		goal.addOption("Direct Hatch", "h");
-		//goal.addOption("Hatch and Regrab", "r"); //see below
-		//goal.addOption("Double Hatch", "d"); //commented until further testing, don't want to rush too far ahead
-		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
-		operator.setDefaultOption("Nathan", "N");//same as above
 		//.getSelected to get value for smart dash board values
 		m_oi = new OI(driver.getSelected(), operator.getSelected()); 
 		prefs = Preferences.getInstance();
 		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
-		tail.resetEject();
+		//tail.resetEject();
 		//intake.cInAdjustR();
 		bar.resetBEnc();
 		cbow.grip();
+		intake.cinIn();
 		cbow.crossOut();
 		intake.cinIn();
-		fbarFix.start();
 		driveBase.limitSpeed(false);
-		SmartDashboard.putData("Position", position);
-		SmartDashboard.putData("Goal", goal);
-		SmartDashboard.putData("Driver", driver);
-		SmartDashboard.putData("Operator", operator);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -196,12 +180,23 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		position = new SendableChooser<>();
+		goal = new SendableChooser<>();
+		SmartDashboard.putNumber("Delay", 0);
+		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.addOption("Middle", "m");
+		position.addOption("Right2", "R");
+		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Right", "r");
+		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.setDefaultOption("Direct Hatch", "h");
+		//goal.addOption("Hatch and Regrab", "r"); //see below
+		//goal.addOption("Double Hatch", "d"); //commented until further testing, don't want to rush too far ahead
 		holder = false;
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
-		SmartDashboard.putData("Driver", driver);
-		SmartDashboard.putData("Operator", operator);
 		driveBase.resetEnc(2);
 		gyro.reset();
 		//autonomousCommand = m_chooser.getSelected();
@@ -224,7 +219,7 @@ public class Robot extends TimedRobot {
 			interrupt = true;
 			autonomousCommand = new fBarMoveToPos(300, true);
 		}
-		else if (position.getSelected().equals("m")||goal.getSelected().equals("f"))
+		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")||position.getSelected().equals("L")||position.getSelected().equals("R"))
 		{
 			autonomousCommand = new sandAutoBasic();
 		}
@@ -264,7 +259,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		//SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		SmartDashboard.putNumber("Gyro", gyro.getAngle());
 		SmartDashboard.updateValues();
 		Scheduler.getInstance().run();
@@ -272,6 +267,17 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		position = new SendableChooser<>();
+		goal = new SendableChooser<>();
+		SmartDashboard.putNumber("Delay", 0);
+		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.addOption("Middle", "m");
+		position.addOption("Right2", "R");
+		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Right", "r");
+		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.setDefaultOption("Direct Hatch", "h");
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
@@ -309,7 +315,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Motor Enc", driveBase.getEncValue(true));//true is right, false is left, sends enc values
 		SmartDashboard.putNumber("Left Motor Enc", driveBase.getEncValue(false));
 		SmartDashboard.putNumber("FBar Enc", bar.getEncValue());
-		SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
+		//SmartDashboard.putNumber("Tail Enc", tail.getEncValue());
 		SmartDashboard.putNumber("Gyro", gyro.getAngle());
 		Scheduler.getInstance().run();
 	}
