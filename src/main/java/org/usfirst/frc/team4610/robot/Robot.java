@@ -238,7 +238,7 @@ public class Robot extends TimedRobot {
 		else if(goal.getSelected().equals("n"))
 		{
 			interrupt = true;
-			autonomousCommand = new fBarMoveToPos(300, true);
+			//autonomousCommand = new fBarMoveToPos(300, true);
 		}
 		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")/*||position.getSelected().equals("L")||position.getSelected().equals("R")*/)
 		{
