@@ -44,8 +44,8 @@ public class FourBar extends Subsystem {
 		fbT.config_kP(0, 0.15, 10);
 		fbT.config_kI(0, 0, 10);
     fbT.config_kD(0, 0, 10);
-    fbT.configPeakOutputForward(.75, 0);//prevents the motor from going to fast
-		fbT.configPeakOutputReverse(-.75, 0);
+    fbT.configPeakOutputForward(.9, 0);//prevents the motor from going to fast
+		fbT.configPeakOutputReverse(-.9, 0);
     fbV.follow(fbT);
     this.fbLimitTop = new DigitalInput(topPort);
     this.fbLimitBot = new DigitalInput(botPort);

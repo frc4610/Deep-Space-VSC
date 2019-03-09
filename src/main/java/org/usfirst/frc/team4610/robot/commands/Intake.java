@@ -84,7 +84,7 @@ public class Intake extends Command {
   protected void interrupted() {
     if(object.equals("Cargo"))
         {
-            Robot.intake.setIntake(0.1);
+            Robot.intake.setIntake(0.175);
             Robot.intake.cinIn();
         }
         else if(object.equals("Hatch"))
