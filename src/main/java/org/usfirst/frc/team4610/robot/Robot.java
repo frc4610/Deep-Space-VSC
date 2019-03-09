@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
 import org.usfirst.frc.team4610.robot.commands.sandAutoSideHatch;
@@ -126,6 +125,7 @@ public class Robot extends TimedRobot {
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
 		//CameraServer.getInstance().startAutomaticCapture();
+		//link to invert camera https://www.chiefdelphi.com/t/flipping-camera-image/126799
 		autoTimer = 0;
 		autoTimeSec = 0;
 		intake = new CIntake(2);//see subsystem for the parameters
