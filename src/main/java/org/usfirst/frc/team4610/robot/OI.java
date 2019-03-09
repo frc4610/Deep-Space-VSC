@@ -111,8 +111,8 @@ public class OI {
 			buttonC5.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonC8.whileHeld(new Intake("Cargo"));
 			buttonC7.whileHeld(new place("Cargo", false));
-			buttonC9.whenPressed(new DriveSpeeds(false));
-			buttonC10.whenPressed(new DriveSpeeds(true));
+			//buttonC9.whenPressed(new DriveSpeeds(false));
+			//buttonC10.whenPressed(new DriveSpeeds(true));
 			//removed functions
 			//buttonR11.whenPressed(new CIntPneums(true));
 			//buttonR12.whenPressed(new CIntPneums(false));
@@ -126,8 +126,8 @@ public class OI {
 		{
 			buttonO7.whileHeld(new BarMoving(-1)); //bar also should be operator, look at cross' comment
 			buttonO8.whileHeld(new BarMoving(1)); 
-			//buttonO3.whileHeld(new Intake("Hatch"));//combined tail up into this
-			//buttonO4.whileHeld(new place("Hatch", false));
+			buttonO3.whenPressed(new GripIntake());//combined tail up into this
+			buttonO4.whenPressed(new CrossRelease(false));
 			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
 			buttonO5.whenPressed(new GripIntake());// a possible to solution to button problem could be a button to switch between tail/cintake control
 			buttonO6.whenReleased(new GripRelease());
@@ -141,7 +141,7 @@ public class OI {
 			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
 			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
-			buttonO1.whenPressed(new fBarMoveToPos(Robot.fbarPosTop, false));
+			buttonO1.whileHeld(new DriveSpeeds(false));
 			buttonO2.whileHeld(new CIntPneums(true));
 			
 

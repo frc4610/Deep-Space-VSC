@@ -50,6 +50,10 @@ public class DriveBase extends Subsystem {
 		BRightMotorFollow.setInverted(true);
 		FLeftMotorFollow.follow(BLeftMotor);
 		BRightMotorFollow.follow(FRightMotor);
+		FRightMotor.configPeakOutputForward(.85, 0);
+		FRightMotor.configPeakOutputReverse(-.85,0);
+		BLeftMotor.configPeakOutputForward(.85, 0);
+		BLeftMotor.configPeakOutputReverse(-.85,0);
 		
 	}
     // Put methods for controlling this subsystem
@@ -73,17 +77,17 @@ public class DriveBase extends Subsystem {
 	{
 		if(!fast)
 		{
+			FRightMotor.configPeakOutputForward(.43, 0);
+			FRightMotor.configPeakOutputReverse(-.43,0);
+			BLeftMotor.configPeakOutputForward(.43, 0);
+			BLeftMotor.configPeakOutputReverse(-.43,0);
+		}
+		else
+		{
 			FRightMotor.configPeakOutputForward(.85, 0);
 			FRightMotor.configPeakOutputReverse(-.85,0);
 			BLeftMotor.configPeakOutputForward(.85, 0);
 			BLeftMotor.configPeakOutputReverse(-.85,0);
-		}
-		else
-		{
-			FRightMotor.configPeakOutputForward(1, 0);
-			FRightMotor.configPeakOutputReverse(-1,0);
-			BLeftMotor.configPeakOutputForward(1, 0);
-			BLeftMotor.configPeakOutputReverse(-1,0);
 		}
 
 	}

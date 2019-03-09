@@ -27,7 +27,7 @@ import org.usfirst.frc.team4610.robot.subsystems.FourBar;
 import org.usfirst.frc.team4610.robot.subsystems.Lidar;
 //import org.usfirst.frc.team4610.robot.subsystems.PIDtester;
 import org.usfirst.frc.team4610.robot.subsystems.Pneum;
-import org.usfirst.frc.team4610.robot.subsystems.Tail;
+//import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -127,6 +127,19 @@ public class Robot extends TimedRobot {
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
 		autoSpeed = .5;
+		position = new SendableChooser<>();
+		goal = new SendableChooser<>();
+		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.addOption("Middle", "m");
+		position.addOption("Right2", "R");
+		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Right", "r");
+		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.setDefaultOption("Direct Hatch", "h");
+		SmartDashboard.putNumber("Delay", 0);
+		SmartDashboard.putData("Position", position);
+		SmartDashboard.putData("Goal", goal);
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
 		SmartDashboard.putData("Driver", driver);
@@ -146,7 +159,7 @@ public class Robot extends TimedRobot {
 		intake.cinIn();
 		cbow.crossOut();
 		intake.cinIn();
-		driveBase.limitSpeed(false);
+		driveBase.limitSpeed(true);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -180,8 +193,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		position = new SendableChooser<>();
-		goal = new SendableChooser<>();
+		driveBase.limitSpeed(true);
 		SmartDashboard.putNumber("Delay", 0);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
 		position.addOption("Middle", "m");
@@ -267,6 +279,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		driveBase.limitSpeed(true);
 		position = new SendableChooser<>();
 		goal = new SendableChooser<>();
 		SmartDashboard.putNumber("Delay", 0);
@@ -299,6 +312,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.updateValues();
 		curveX = -m_oi.CON.getRawAxis(1);
 		curveY = -m_oi.CON.getRawAxis(3);
 		//bar.setBar(ControlMode.PercentOutput, m_oi.OP_JOY.getRawAxis(1));//a potential curve for sensitivy is axxx + (1-a)x, where x is the value and a is a number from 0 - 1 prolly .6. a = 0, its a straight line
