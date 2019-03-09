@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
 	public static double acceptedJoyTolerance = 5;//sets it so that a small jolt doesn't stop auto, no longer used
 	public static DriveBase driveBase;
 	public static Lidar lidar;
+	public static Servo cameraServo;
 	//public static PIDtester testTail;
 	public static AHRS gyro;
 	//public static Tail tail;
@@ -108,6 +109,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		holder = false;
+		cameraServo = new Servo(1);// 1 is a placeholder\
+		//line of code is cameraSevo.set(0 to 1);
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
 		//testServo.setBounds(2, 2, 1.5, 1, 1);//check values, min is 1, and max is 2, but other values are unknown. this is for am L-16, check for other acuators
@@ -122,6 +125,7 @@ public class Robot extends TimedRobot {
 		cbow = new Crossbow(2,3,0,1);//see subsystem for the parameters
 		tele = new tankDrive();
 		CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture();
 		autoTimer = 0;
 		autoTimeSec = 0;
 		intake = new CIntake(2);//see subsystem for the parameters
@@ -324,6 +328,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		if(bar.getEncValue() >= 5000)
+		{
+			cameraServo.set(1);
+		}
+		else
+		{
+			cameraServo.set(0);
+		}
 		SmartDashboard.updateValues();
 		curveX = -m_oi.CON.getRawAxis(1);
 		curveY = -m_oi.CON.getRawAxis(3);
