@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
+import org.usfirst.frc.team4610.robot.commands.sandAutoSideHatch;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.CIntake;
 import org.usfirst.frc.team4610.robot.subsystems.Crossbow;
@@ -135,8 +136,9 @@ public class Robot extends TimedRobot {
 		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
-		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
-		goal.setDefaultOption("Direct Hatch", "h");
+		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.addOption("Direct Hatch", "h");
+		goal.addOption("Side Hatch", "s");
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
@@ -201,8 +203,9 @@ public class Robot extends TimedRobot {
 		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
-		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
-		goal.setDefaultOption("Direct Hatch", "h");
+		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.addOption("Direct Hatch", "h");
+		goal.addOption("Side Hatch", "s");
 		//goal.addOption("Hatch and Regrab", "r"); //see below
 		//goal.addOption("Double Hatch", "d"); //commented until further testing, don't want to rush too far ahead
 		holder = false;
@@ -231,17 +234,17 @@ public class Robot extends TimedRobot {
 			interrupt = true;
 			autonomousCommand = new fBarMoveToPos(300, true);
 		}
-		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")||position.getSelected().equals("L")||position.getSelected().equals("R"))
+		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")/*||position.getSelected().equals("L")||position.getSelected().equals("R")*/)
 		{
 			autonomousCommand = new sandAutoBasic();
 		}
-		else if (goal.getSelected().equals("h"))
+		else if (goal.getSelected().equals("h")&&(position.getSelected().equals("l")||position.getSelected().equals("r")))
 		{
 			autonomousCommand = new sandAutoPlace(position.getSelected());//use params to better use left/right/hab lvl for command groups called. Auto functions still untested
 		}
-		else if (goal.getSelected().equals("r"))
+		else if (goal.getSelected().equals("s"))
 		{
-			autonomousCommand = new sandAutoPlace(position.getSelected());//Auto functions still untested
+			autonomousCommand = new sandAutoSideHatch(position.getSelected());//Auto functions still untested
 		}/*
 		else if (goal.getSelected().equals("d")) //for now I've commented this out until the rest of auto is tested, will remian as such until the rest of auto is tested 
 		{
@@ -289,8 +292,9 @@ public class Robot extends TimedRobot {
 		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
-		goal.addOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
-		goal.setDefaultOption("Direct Hatch", "h");
+		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
+		goal.addOption("Direct Hatch", "h");
+		goal.addOption("Side Hatch", "s");
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
