@@ -131,17 +131,21 @@ public class Robot extends TimedRobot {
 		position = new SendableChooser<>();
 		goal = new SendableChooser<>();
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.setDefaultOption("Left2", "L");
 		position.addOption("Middle", "m");
 		position.addOption("Right2", "R");
-		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
 		goal.addOption("Side Hatch", "s");
 		SmartDashboard.putNumber("Delay", 0);
 		SmartDashboard.putData("Position", position);
 		SmartDashboard.putData("Goal", goal);
+		driver.addOption("Winte", "W");
+		operator.addOption("Nathan", "N");
 		driver.setDefaultOption("Winte", "W");// may be deleted later, keep in for now as its harmless
 		operator.setDefaultOption("Nathan", "N");//same as above
 		SmartDashboard.putData("Driver", driver);
@@ -198,11 +202,13 @@ public class Robot extends TimedRobot {
 		driveBase.limitSpeed(true);
 		SmartDashboard.putNumber("Delay", 0);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.setDefaultOption("Left2", "L");
 		position.addOption("Middle", "m");
 		position.addOption("Right2", "R");
-		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
 		goal.addOption("Side Hatch", "s");
@@ -287,11 +293,13 @@ public class Robot extends TimedRobot {
 		goal = new SendableChooser<>();
 		SmartDashboard.putNumber("Delay", 0);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
+		position.setDefaultOption("Left2", "L");
 		position.addOption("Middle", "m");
 		position.addOption("Right2", "R");
-		position.setDefaultOption("Left", "l");//should never be the case, but may be needed
+		position.addOption("Left", "l");//should never be the case, but may be needed
 		position.addOption("Right", "r");
 		goal.addOption("No auto", "n");
+		goal.addOption("Forward", "f");
 		goal.setDefaultOption("Forward", "f");//f is forward, hatch is 1 place, r is place/grab, d is 2 places (with a grab obviously)
 		goal.addOption("Direct Hatch", "h");
 		goal.addOption("Side Hatch", "s");
