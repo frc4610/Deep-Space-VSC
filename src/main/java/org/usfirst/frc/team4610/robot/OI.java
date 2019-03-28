@@ -53,6 +53,7 @@ public class OI {
 	public Button buttonL3 = new JoystickButton(LEFT_JOY, 3);
 	public Button buttonL4 = new JoystickButton(LEFT_JOY, 4);
 	public Button buttonL5 = new JoystickButton(LEFT_JOY, 5);*/
+	public Button buttonC1 = new JoystickButton(CON, 1);
 	public Button buttonC5 = new JoystickButton(CON, 5);
 	public Button buttonC6 = new JoystickButton(CON, 6);
 	public Button buttonC7 = new JoystickButton(CON, 7);
@@ -111,6 +112,7 @@ public class OI {
 			buttonC5.whenPressed(new DrivePneums(0)); // 0 is low gear
 			buttonC8.whileHeld(new Intake("Cargo"));
 			buttonC7.whileHeld(new place("Cargo", false));
+			buttonC1.whileHeld(new DriveSpeeds(false));
 			//buttonC9.whenPressed(new DriveSpeeds(false));
 			//buttonC10.whenPressed(new DriveSpeeds(true));
 			//removed functions
@@ -124,8 +126,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO7.whileHeld(new BarMoving(-1)); //bar also should be operator, look at cross' comment
-			buttonO8.whileHeld(new BarMoving(1)); 
+			buttonO7.whileHeld(new BarMoving(-1, false)); //bar also should be operator, look at cross' comment
+			buttonO8.whileHeld(new BarMoving(1, false)); 
 			buttonO3.whenPressed(new GripIntake());//combined tail up into this
 			buttonO4.whenPressed(new CrossRelease(false));
 			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
@@ -139,7 +141,7 @@ public class OI {
 			*/
 			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
 			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
-			buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
+			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
 			buttonO1.whileHeld(new DriveSpeeds(false));
 			buttonO2.whileHeld(new CIntPneums(true));

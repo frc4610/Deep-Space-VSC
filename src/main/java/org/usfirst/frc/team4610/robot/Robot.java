@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4610.robot.commands.sandAutoBasic;
 import org.usfirst.frc.team4610.robot.commands.sandAutoPlace;
-import org.usfirst.frc.team4610.robot.commands.sandAutoSideHatch;
+//import org.usfirst.frc.team4610.robot.commands.sandAutoSideHatch;
 import org.usfirst.frc.team4610.robot.commands.tankDrive;
 import org.usfirst.frc.team4610.robot.subsystems.CIntake;
 import org.usfirst.frc.team4610.robot.subsystems.Crossbow;
@@ -25,12 +25,14 @@ import org.usfirst.frc.team4610.robot.subsystems.DriveBase;
 import org.usfirst.frc.team4610.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team4610.robot.subsystems.FourBar;
 import org.usfirst.frc.team4610.robot.subsystems.Lidar;
+import org.usfirst.frc.team4610.robot.subsystems.HabClimber;
 //import org.usfirst.frc.team4610.robot.subsystems.PIDtester;
 import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 //import org.usfirst.frc.team4610.robot.subsystems.Tail;
 
 import edu.wpi.first.cameraserver.CameraServer;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
 	public static double fbarPos2 = 2600;
 	public static double fbarPos3 = 3345;
 	public static double fbarPos4 = 5415;
-	public static double fbarPosTop = 6170;
+	public static double fbarPosTop = 4600;
 	public static double autoTimer;//tracks time in ms
 	public static double autoTimeSec;//tracks time in seconds
 	public static double autoSpeed;//default speed for drivebase in auto
@@ -86,6 +88,7 @@ public class Robot extends TimedRobot {
 	public static Preferences prefs;
 	public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
 	public static OI m_oi;
+	public static HabClimber climb;
 	public Servo testServo = new Servo(1);//still untested, linear actuator testing. May be unused in the real bot
 	SendableChooser<String> position;
 	SendableChooser<String> driver;
@@ -99,6 +102,7 @@ public class Robot extends TimedRobot {
 	public static double curveY;
 	public static double curveA = .6;
 	boolean holder = false;
+	private double barSpeed;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
@@ -108,7 +112,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		holder = false;
-		cameraServo = new Servo(1);// 1 is a placeholder\
+		//cameraServo = new Servo(1);// 1 is a placeholder\
 		//line of code is cameraSevo.set(0 to 1);
 		driver = new SendableChooser<>();
 		operator = new SendableChooser<>();
@@ -128,6 +132,7 @@ public class Robot extends TimedRobot {
 		//link to invert camera https://www.chiefdelphi.com/t/flipping-camera-image/126799
 		autoTimer = 0;
 		autoTimeSec = 0;
+		//climb = new HabClimber(0,1,2,3);
 		intake = new CIntake(2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
@@ -162,6 +167,8 @@ public class Robot extends TimedRobot {
 		prefs = Preferences.getInstance();
 		//Sets subsystems to what should be their default positions, in case they weren't reset at the end of the last game
 		driveBase.resetEnc(2);
+		climb.frontRetract();
+		climb.rearRetract();
 		//tail.resetEject();
 		//intake.cInAdjustR();
 		bar.resetBEnc();
@@ -203,6 +210,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		bar.initDefaultCommand();
 		driveBase.limitSpeed(true);
 		SmartDashboard.putNumber("Delay", 0);
 		position.addOption("Left2", "L");//lower case is HAB 1, upper is HAB 2
@@ -244,7 +252,7 @@ public class Robot extends TimedRobot {
 			interrupt = true;
 			//autonomousCommand = new fBarMoveToPos(300, true);
 		}
-		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")/*||position.getSelected().equals("L")||position.getSelected().equals("R")*/)
+		else if (position.getSelected().equals("m")||goal.getSelected().equals("f")||position.getSelected().equals("L")||position.getSelected().equals("R"))
 		{
 			autonomousCommand = new sandAutoBasic();
 		}
@@ -254,7 +262,7 @@ public class Robot extends TimedRobot {
 		}
 		else if (goal.getSelected().equals("s"))
 		{
-			autonomousCommand = new sandAutoSideHatch(position.getSelected());//Auto functions still untested
+			autonomousCommand = new sandAutoBasic();
 		}/*
 		else if (goal.getSelected().equals("d")) //for now I've commented this out until the rest of auto is tested, will remian as such until the rest of auto is tested 
 		{
@@ -292,6 +300,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		bar.setBar(ControlMode.PercentOutput, m_oi.OP_JOY.getRawAxis(1));
+		bar.initDefaultCommand();
 		driveBase.limitSpeed(true);
 		position = new SendableChooser<>();
 		goal = new SendableChooser<>();
@@ -328,14 +338,37 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		if(bar.getEncValue() >= 5000)
+		barSpeed = -m_oi.OP_JOY.getRawAxis(1);
+		if(barSpeed >= 0)
 		{
-			cameraServo.set(1);
+			if(bar.getEncValue() >= 4600)
+			{
+				bar.setBar(ControlMode.PercentOutput, -m_oi.OP_JOY.getRawAxis(1));
+			}
+			else
+			{
+				bar.setBar(ControlMode.PercentOutput, 0);
+			}
+		}
+		else if(barSpeed < 0)	
+		{
+			if(bar.getEncValue() < 0)
+			{
+				bar.setBar(ControlMode.PercentOutput, -m_oi.OP_JOY.getRawAxis(1));
+			}
+			else
+			{
+				bar.setBar(ControlMode.PercentOutput, 0);
+			}
+		}	
+		/*if(bar.getEncValue() >= 5000)
+		{
+			//cameraServo.set(1);
 		}
 		else
 		{
-			cameraServo.set(0);
-		}
+			//cameraServo.set(0);
+		}*/
 		SmartDashboard.updateValues();
 		curveX = -m_oi.CON.getRawAxis(1);
 		curveY = -m_oi.CON.getRawAxis(3);

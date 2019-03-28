@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import org.usfirst.frc.team4610.robot.Robot;
+//import org.usfirst.frc.team4610.robot.commands.BarMoving;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -77,6 +78,7 @@ public class FourBar extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    //setDefaultCommand(new BarMoving(-Robot.m_oi.OP_JOY.getRawAxis(1), true));
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }

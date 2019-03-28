@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BarMoving extends Command {
 
 private double speed;
-
-  public BarMoving(double Speed) {
+private boolean auto;
+  public BarMoving(double Speed, boolean Auto) {
     //moves bar based on inputted speed
     this.speed = Speed;
+    this.auto = Auto;
     requires(Robot.bar);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -28,7 +29,10 @@ private double speed;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.interrupt = true;
+    if(!auto)
+    {
+      Robot.interrupt = true;
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,15 +47,29 @@ private double speed;
     //stops when button is released. change later to set to the limit switches or enc values.
     if(speed < 0)
     {
+      if(!auto)
+      {
       return !Robot.m_oi.buttonO7.get()||Robot.bar.getEncValue() <= 0;
+      }
+      else
+      {
+        return Robot.bar.getEncValue() <= 0;
+      }
     }
-    else if(speed > 0)
+    else if(speed >= 0)
     {
-      return !Robot.m_oi.buttonO8.get()||Robot.bar.getEncValue() >= 6600;
+      if(!auto)
+      {
+      return !Robot.m_oi.buttonO8.get()||Robot.bar.getEncValue() >= 4600;
+      }
+      else
+      {
+        return Robot.bar.getEncValue() >= 4600;
+      }
     }
     else
     {
-      return true;
+      return false;//true
     }
     
   }
