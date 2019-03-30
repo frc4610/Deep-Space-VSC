@@ -126,26 +126,25 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO7.whileHeld(new BarMoving(-1, false)); //bar also should be operator, look at cross' comment
+			buttonO7.whileHeld(new BarMoving(-1, false)); //bar is operator controlled
 			buttonO8.whileHeld(new BarMoving(1, false)); 
-			buttonO3.whenPressed(new GripIntake());//combined tail up into this
+			buttonO3.whenPressed(new GripIntake());
 			buttonO4.whenPressed(new CrossRelease(false));
-			buttonO6.whenPressed(new CrossIntake(false));//crossbow should be operator controlled, but we either need to consildate its functions or lower fbar positions, or somehow change overall scheme
-			buttonO5.whenPressed(new GripIntake());// a possible to solution to button problem could be a button to switch between tail/cintake control
+			buttonO6.whenPressed(new CrossIntake(false));//crossbow is operator controlled
+			buttonO5.whenPressed(new GripIntake());
 			buttonO6.whenReleased(new GripRelease());
 			buttonO5.whenReleased(new CrossRelease(false));
-			// current in place solution is to set 3 fbar positions and to recompress the crossbow functions.
 			
-			/* commented until placeholders are set to be used, may want to set it to be on the right contrller while testing, later we can combine functions.
-			
-			*/
 			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
-			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false));
+			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false)); //currently unneeded, but still here if wanted in the future
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
-			buttonO1.whileHeld(new DriveSpeeds(false));
-			buttonO2.whileHeld(new CIntPneums(true));
-			
+			buttonO1.whileHeld(new DriveSpeeds(false));//slows robot for small adjustments
+			buttonO2.whileHeld(new CIntPneums(true));//puts our intake pneums out
+			/*
+			buttonO12.whileHeld(new ClimbStart());//climb mechanism, commented until testing is complete
+			buttonO11.whileHeld(new ClimbFinish());
+			*/
 
 			//removed functions
 			//buttonO9.whenPressed(new GripIntake());
