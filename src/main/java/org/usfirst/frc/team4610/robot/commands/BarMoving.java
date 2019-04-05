@@ -50,6 +50,7 @@ private boolean auto;
       if(!auto)
       {
       return !Robot.m_oi.buttonO7.get()||Robot.bar.getEncValue() <= 0;
+      //return !Robot.m_oi.buttonO8.get()||Robot.bar.getEncValue() >= 4600;
       }
       else
       {
@@ -61,6 +62,7 @@ private boolean auto;
       if(!auto)
       {
       return !Robot.m_oi.buttonO8.get()||Robot.bar.getEncValue() >= 4600;
+      //return !Robot.m_oi.buttonO7.get()||Robot.bar.getEncValue() <= 0;
       }
       else
       {

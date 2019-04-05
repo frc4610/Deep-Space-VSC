@@ -20,10 +20,12 @@ import org.usfirst.frc.team4610.robot.commands.DrivePneums;
 import org.usfirst.frc.team4610.robot.commands.DriveSpeeds;
 import org.usfirst.frc.team4610.robot.commands.GripIntake;
 import org.usfirst.frc.team4610.robot.commands.GripRelease;
+import org.usfirst.frc.team4610.robot.commands.ClimbStart;
+import org.usfirst.frc.team4610.robot.commands.ClimbFinish;
 //import org.usfirst.frc.team4610.robot.commands.GripIntake;
 //import org.usfirst.frc.team4610.robot.commands.GripRelease;
 //import org.usfirst.frc.team4610.robot.commands.CIntPneums;
-import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
+//import org.usfirst.frc.team4610.robot.commands.fBarMoveToPos;
 //import org.usfirst.frc.team4610.robot.commands.Invert;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -126,8 +128,8 @@ public class OI {
 		}
 		if(operator.equals("N"))
 		{
-			buttonO7.whileHeld(new BarMoving(-1, false)); //bar is operator controlled
-			buttonO8.whileHeld(new BarMoving(1, false)); 
+			buttonO7.whileHeld(new BarMoving(-1, false));//invert = 1 //bar is operator controlled, also inverted code is commented, change in barmoving aswell when done
+			buttonO8.whileHeld(new BarMoving(1, false)); //invert = -1
 			buttonO3.whenPressed(new GripIntake());
 			buttonO4.whenPressed(new CrossRelease(false));
 			buttonO6.whenPressed(new CrossIntake(false));//crossbow is operator controlled
@@ -135,16 +137,16 @@ public class OI {
 			buttonO6.whenReleased(new GripRelease());
 			buttonO5.whenReleased(new CrossRelease(false));
 			
-			buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
+			//buttonO9.whenPressed(new fBarMoveToPos(Robot.fbarPosBot, false));
 			//buttonO8.whenPressed(new fBarMoveToPos(Robot.fbarPos2, false)); //currently unneeded, but still here if wanted in the future
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos3, false));
 			//buttonO10.whenPressed(new fBarMoveToPos(Robot.fbarPos4, false));
 			buttonO1.whileHeld(new DriveSpeeds(false));//slows robot for small adjustments
 			buttonO2.whileHeld(new CIntPneums(true));//puts our intake pneums out
-			/*
-			buttonO12.whileHeld(new ClimbStart());//climb mechanism, commented until testing is complete
-			buttonO11.whileHeld(new ClimbFinish());
-			*/
+			
+			buttonO10.whileHeld(new ClimbStart());//climb mechanism, commented until testing is complete
+			buttonO9.whileHeld(new ClimbFinish());
+			
 
 			//removed functions
 			//buttonO9.whenPressed(new GripIntake());

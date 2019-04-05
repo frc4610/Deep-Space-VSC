@@ -26,19 +26,19 @@ public class HabClimber extends Subsystem {
 
   public void frontClimb()
   {
-    frontDS.set(DoubleSolenoid.Value.kForward);
+    frontDS.set(DoubleSolenoid.Value.kReverse);
   }
   public void frontRetract()
   {
-    frontDS.set(DoubleSolenoid.Value.kReverse);
+    frontDS.set(DoubleSolenoid.Value.kForward);
   }
   public void rearClimb()
   {
-    rearDS.set(DoubleSolenoid.Value.kForward);
+    rearDS.set(DoubleSolenoid.Value.kReverse);
   }
   public void rearRetract()
   {
-    rearDS.set(DoubleSolenoid.Value.kReverse);
+    rearDS.set(DoubleSolenoid.Value.kForward);
   }
   // Put methods for controlling this subsystem
   // here. Call these from Commands.

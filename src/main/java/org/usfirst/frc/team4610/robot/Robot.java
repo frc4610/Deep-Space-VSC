@@ -32,7 +32,7 @@ import org.usfirst.frc.team4610.robot.subsystems.Pneum;
 
 import edu.wpi.first.cameraserver.CameraServer;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
 	public static double curveY;
 	public static double curveA = .6;
 	boolean holder = false;
-	private double barSpeed;
+	//private double barSpeed;
 	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 		//link to invert camera https://www.chiefdelphi.com/t/flipping-camera-image/126799
 		autoTimer = 0;
 		autoTimeSec = 0;
-		//climb = new HabClimber(0,1,2,3);
+		climb = new HabClimber(4,5,6,7);
 		intake = new CIntake(2);//see subsystem for the parameters
 		bar = new FourBar(3, 4);//see subsystem for the parameters
 		//testTail = new PIDtester(1,2,3,4);
@@ -300,7 +300,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		bar.setBar(ControlMode.PercentOutput, m_oi.OP_JOY.getRawAxis(1));
 		bar.initDefaultCommand();
 		driveBase.limitSpeed(true);
 		position = new SendableChooser<>();
@@ -338,29 +337,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		barSpeed = -m_oi.OP_JOY.getRawAxis(1);
-		if(barSpeed >= 0)
-		{
-			if(bar.getEncValue() >= 4600)
-			{
-				bar.setBar(ControlMode.PercentOutput, -m_oi.OP_JOY.getRawAxis(1));
-			}
-			else
-			{
-				bar.setBar(ControlMode.PercentOutput, 0);
-			}
-		}
-		else if(barSpeed < 0)	
-		{
-			if(bar.getEncValue() < 0)
-			{
-				bar.setBar(ControlMode.PercentOutput, -m_oi.OP_JOY.getRawAxis(1));
-			}
-			else
-			{
-				bar.setBar(ControlMode.PercentOutput, 0);
-			}
-		}	
+		//barSpeed = -m_oi.OP_JOY.getRawAxis(1);
+		
 		/*if(bar.getEncValue() >= 5000)
 		{
 			//cameraServo.set(1);
